@@ -1,9 +1,44 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/shop/shop",
+    "pages/zone/zone",
+    "pages/mine/mine",
+    "pages/product-detail/product-detail",
+    "pages/about/about"
   ],
+  "entryPagePath": "pages/shop/shop",
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#0a84ff",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/shop/shop",
+        "text": "店铺",
+        "iconPath": "assets/tab-shop.png",
+        "selectedIconPath": "assets/tab-shop-active.png"
+      },
+      {
+        "pagePath": "pages/zone/zone",
+        "text": "专区",
+        "iconPath": "assets/tab-zone.png",
+        "selectedIconPath": "assets/tab-zone-active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "assets/tab-mine.png",
+        "selectedIconPath": "assets/tab-mine-active.png"
+      }
+    ]
+  },
   "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom"
   },

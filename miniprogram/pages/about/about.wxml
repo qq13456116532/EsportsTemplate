@@ -1,0 +1,4 @@
+<navigation-bar title="关于我们" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<view style="padding: 20px;">
+  <text>我们是领先的电竞服务平台，致力于为广大玩家提供最优质的陪练和教学服务。</text>
+</view>

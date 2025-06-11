@@ -1,0 +1,26 @@
+<navigation-bar title="专区" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<view class="zone-container">
+  <scroll-view class="category-sidebar" scroll-y>
+    <view
+      wx:for="{{categories}}"
+      wx:key="id"
+      class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
+      bindtap="onCategoryTap"
+      data-id="{{item.id}}">
+      {{item.name}}
+    </view>
+  </scroll-view>
+
+  <scroll-view class="product-content" scroll-y>
+    <view class="product-list">
+       <navigator url="/pages/product-detail/product-detail" class="product-card-zone" wx:for="{{products}}" wx:key="id">
+        <image class="product-image-zone" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="product-info-zone">
+          <view class="product-name-zone">{{item.name}}</view>
+          <view class="product-sales-zone">已售{{item.sales}}</view>
+          <view class="product-price-zone">¥{{item.price}}</view>
+        </view>
+      </navigator>
+    </view>
+  </scroll-view>
+</view>

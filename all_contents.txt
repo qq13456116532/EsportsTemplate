@@ -1,0 +1,1205 @@
+miniprogram/components\navigation-bar\navigation-bar.json：
+【{
+  "component": true,
+  "styleIsolation": "apply-shared",
+  "usingComponents": {}
+}】
+
+miniprogram/components\navigation-bar\navigation-bar.less：
+【.weui-navigation-bar {
+  --weui-FG-0:rgba(0,0,0,.9);
+  --height: 44px;
+  --left: 16px;
+}
+.weui-navigation-bar .android {
+  --height: 48px;
+}
+
+.weui-navigation-bar {
+  overflow: hidden;
+  color: var(--weui-FG-0);
+  flex: none;
+}
+
+.weui-navigation-bar__inner {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: calc(var(--height) + env(safe-area-inset-top));
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-top: env(safe-area-inset-top);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.weui-navigation-bar__left {
+  position: relative;
+  padding-left: var(--left);
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.weui-navigation-bar__btn_goback_wrapper {
+  padding: 11px 18px 11px 16px;
+  margin: -11px -18px -11px -16px;
+}
+
+.weui-navigation-bar__btn_goback_wrapper.weui-active {
+  opacity: 0.5;
+}
+
+.weui-navigation-bar__btn_goback {
+  font-size: 12px;
+  width: 12px;
+  height: 24px;
+  -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E") no-repeat 50% 50%;
+  mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E") no-repeat 50% 50%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: var(--weui-FG-0);
+}
+
+.weui-navigation-bar__center {
+  font-size: 17px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex: 1;
+  height: 100%;
+}
+
+.weui-navigation-bar__loading {
+  margin-right: 4px;
+  align-items: center;
+}
+
+.weui-loading {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  display: block;
+  background: transparent url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='80px' height='80px' viewBox='0 0 80 80' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eloading%3C/title%3E%3Cdefs%3E%3ClinearGradient x1='94.0869141%25' y1='0%25' x2='94.0869141%25' y2='90.559082%25' id='linearGradient-1'%3E%3Cstop stop-color='%23606060' stop-opacity='0' offset='0%25'%3E%3C/stop%3E%3Cstop stop-color='%23606060' stop-opacity='0.3' offset='100%25'%3E%3C/stop%3E%3C/linearGradient%3E%3ClinearGradient x1='100%25' y1='8.67370605%25' x2='100%25' y2='90.6286621%25' id='linearGradient-2'%3E%3Cstop stop-color='%23606060' offset='0%25'%3E%3C/stop%3E%3Cstop stop-color='%23606060' stop-opacity='0.3' offset='100%25'%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' opacity='0.9'%3E%3Cg%3E%3Cpath d='M40,0 C62.09139,0 80,17.90861 80,40 C80,62.09139 62.09139,80 40,80 L40,73 C58.2253967,73 73,58.2253967 73,40 C73,21.7746033 58.2253967,7 40,7 L40,0 Z' fill='url(%23linearGradient-1)'%3E%3C/path%3E%3Cpath d='M40,0 L40,7 C21.7746033,7 7,21.7746033 7,40 C7,58.2253967 21.7746033,73 40,73 L40,80 C17.90861,80 0,62.09139 0,40 C0,17.90861 17.90861,0 40,0 Z' fill='url(%23linearGradient-2)'%3E%3C/path%3E%3Ccircle id='Oval' fill='%23606060' cx='40.5' cy='3.5' r='3.5'%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A") no-repeat;
+  background-size: 100%;
+  margin-left: 0;
+  animation: loading linear infinite 1s;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+】
+
+miniprogram/components\navigation-bar\navigation-bar.ts：
+【Component({
+  options: {
+    multipleSlots: true // 在组件定义时的选项中启用多slot支持
+  },
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    extClass: {
+      type: String,
+      value: ''
+    },
+    title: {
+      type: String,
+      value: ''
+    },
+    background: {
+      type: String,
+      value: ''
+    },
+    color: {
+      type: String,
+      value: ''
+    },
+    back: {
+      type: Boolean,
+      value: true
+    },
+    loading: {
+      type: Boolean,
+      value: false
+    },
+    homeButton: {
+      type: Boolean,
+      value: false,
+    },
+    animated: {
+      // 显示隐藏的时候opacity动画效果
+      type: Boolean,
+      value: true
+    },
+    show: {
+      // 显示隐藏导航，隐藏的时候navigation-bar的高度占位还在
+      type: Boolean,
+      value: true,
+      observer: '_showChange'
+    },
+    // back为true的时候，返回的页面深度
+    delta: {
+      type: Number,
+      value: 1
+    },
+  },
+  /**
+   * 组件的初始数据
+   */
+  data: {
+    displayStyle: ''
+  },
+  lifetimes: {
+    attached() {
+      const rect = wx.getMenuButtonBoundingClientRect()
+      wx.getSystemInfo({
+        success: (res) => {
+          const isAndroid = res.platform === 'android'
+          const isDevtools = res.platform === 'devtools'
+          this.setData({
+            ios: !isAndroid,
+            innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
+            leftWidth: `width: ${res.windowWidth - rect.left }px`,
+            safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
+          })
+        }
+      })
+    },
+  },
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    _showChange(show: boolean) {
+      const animated = this.data.animated
+      let displayStyle = ''
+      if (animated) {
+        displayStyle = `opacity: ${
+          show ? '1' : '0'
+        };transition:opacity 0.5s;`
+      } else {
+        displayStyle = `display: ${show ? '' : 'none'}`
+      }
+      this.setData({
+        displayStyle
+      })
+    },
+    back() {
+      const data = this.data
+      if (data.delta) {
+        wx.navigateBack({
+          delta: data.delta
+        })
+      }
+      this.triggerEvent('back', { delta: data.delta }, {})
+    }
+  },
+})
+】
+
+miniprogram/components\navigation-bar\navigation-bar.wxml：
+【<view class="weui-navigation-bar {{extClass}}">
+  <view class="weui-navigation-bar__inner {{ios ? 'ios' : 'android'}}" style="color: {{color}}; background: {{background}}; {{displayStyle}}; {{innerPaddingRight}}; {{safeAreaTop}};">
+
+    <!-- 左侧按钮 -->
+    <view class='weui-navigation-bar__left' style="{{leftWidth}};">
+      <block wx:if="{{back || homeButton}}">
+        <!-- 返回上一页 -->
+        <block wx:if="{{back}}">
+          <view class="weui-navigation-bar__buttons weui-navigation-bar__buttons_goback">
+            <view
+              bindtap="back"
+              class="weui-navigation-bar__btn_goback_wrapper"
+              hover-class="weui-active"
+              hover-stay-time="100"
+              aria-role="button"
+              aria-label="返回"
+            >
+              <view class="weui-navigation-bar__button weui-navigation-bar__btn_goback"></view>
+            </view>
+          </view>
+        </block>
+        <!-- 返回首页 -->
+        <block wx:if="{{homeButton}}">
+          <view class="weui-navigation-bar__buttons weui-navigation-bar__buttons_home">
+            <view
+              bindtap="home"
+              class="weui-navigation-bar__btn_home_wrapper"
+              hover-class="weui-active"
+              aria-role="button"
+              aria-label="首页"
+            >
+              <view class="weui-navigation-bar__button weui-navigation-bar__btn_home"></view>
+            </view>
+          </view>
+        </block>
+      </block>
+      <block wx:else>
+        <slot name="left"></slot>
+      </block>
+    </view>
+
+    <!-- 标题 -->
+    <view class='weui-navigation-bar__center'>
+      <view wx:if="{{loading}}" class="weui-navigation-bar__loading" aria-role="alert">
+        <view
+          class="weui-loading"
+          aria-role="img"
+          aria-label="加载中"
+        ></view>
+      </view>
+      <block wx:if="{{title}}">
+        <text>{{title}}</text>
+      </block>
+      <block wx:else>
+        <slot name="center"></slot>
+      </block>
+    </view>
+    
+    <!-- 右侧留空 -->
+    <view class='weui-navigation-bar__right'>
+      <slot name="right"></slot>
+    </view>
+  </view>
+</view>
+】
+
+miniprogram/pages\about\about.json：
+【{ "usingComponents": { "navigation-bar": "/components/navigation-bar/navigation-bar" } }】
+
+miniprogram/pages\about\about.less：
+【/* pages/about/about.wxss */】
+
+miniprogram/pages\about\about.ts：
+【// pages/about/about.ts
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  }
+})】
+
+miniprogram/pages\about\about.wxml：
+【<navigation-bar title="关于我们" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<view style="padding: 20px;">
+  <text>我们是领先的电竞服务平台，致力于为广大玩家提供最优质的陪练和教学服务。</text>
+</view>】
+
+miniprogram/pages\index\index.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}】
+
+miniprogram/pages\index\index.less：
+【/**index.less**/
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.scrollarea {
+  flex: 1;
+  overflow-y: hidden;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  width: 80%;
+}
+
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+.avatar-wrapper {
+  padding: 0;
+  width: 56px !important;
+  border-radius: 8px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+}
+
+.nickname-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  border-top: .5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.nickname-label {
+  width: 105px;
+}
+
+.nickname-input {
+  flex: 1;
+}
+】
+
+miniprogram/pages\index\index.ts：
+【// index.ts
+// 获取应用实例
+const app = getApp<IAppOption>()
+const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+
+Component({
+  data: {
+    motto: 'Hello World',
+    userInfo: {
+      avatarUrl: defaultAvatarUrl,
+      nickName: '',
+    },
+    hasUserInfo: false,
+    canIUseGetUserProfile: wx.canIUse('getUserProfile'),
+    canIUseNicknameComp: wx.canIUse('input.type.nickname'),
+  },
+  methods: {
+    // 事件处理函数
+    bindViewTap() {
+      wx.navigateTo({
+        url: '../logs/logs',
+      })
+    },
+    onChooseAvatar(e: any) {
+      const { avatarUrl } = e.detail
+      const { nickName } = this.data.userInfo
+      this.setData({
+        "userInfo.avatarUrl": avatarUrl,
+        hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
+      })
+    },
+    onInputChange(e: any) {
+      const nickName = e.detail.value
+      const { avatarUrl } = this.data.userInfo
+      this.setData({
+        "userInfo.nickName": nickName,
+        hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
+      })
+    },
+    getUserProfile() {
+      // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+      wx.getUserProfile({
+        desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          console.log(res)
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    },
+  },
+})
+】
+
+miniprogram/pages\index\index.wxml：
+【<!--index.wxml-->
+<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <view class="userinfo">
+      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
+        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+        </button>
+        <view class="nickname-wrapper">
+          <text class="nickname-label">昵称</text>
+          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
+        </view>
+      </block>
+      <block wx:elif="{{!hasUserInfo}}">
+        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
+      </block>
+      <block wx:else>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      </block>
+    </view>
+    <view class="usermotto">
+      <text class="user-motto">{{motto}}</text>
+    </view>
+  </view>
+</scroll-view>
+】
+
+miniprogram/pages\logs\logs.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}】
+
+miniprogram/pages\logs\logs.less：
+【page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.scrollarea {
+  flex: 1;
+  overflow-y: hidden;
+}
+.log-item {
+  margin-top: 20rpx;
+  text-align: center;
+}
+.log-item:last-child {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+】
+
+miniprogram/pages\logs\logs.ts：
+【// logs.ts
+// const util = require('../../utils/util.js')
+import { formatTime } from '../../utils/util'
+
+Component({
+  data: {
+    logs: [],
+  },
+  lifetimes: {
+    attached() {
+      this.setData({
+        logs: (wx.getStorageSync('logs') || []).map((log: string) => {
+          return {
+            date: formatTime(new Date(log)),
+            timeStamp: log
+          }
+        }),
+      })
+    }
+  },
+})
+】
+
+miniprogram/pages\logs\logs.wxml：
+【<!--logs.wxml-->
+<navigation-bar title="查看启动日志" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <block wx:for="{{logs}}" wx:key="timeStamp" wx:for-item="log">
+    <view class="log-item">{{index + 1}}. {{log.date}}</view>
+  </block>
+</scroll-view>
+】
+
+miniprogram/pages\mine\mine.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}】
+
+miniprogram/pages\mine\mine.less：
+【/* pages/mine/mine.less */
+.mine-container {
+  background-color: #f4f4f4;
+  height: 100vh;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.user-id {
+  font-size: 14px;
+  color: #888;
+}
+
+.order-section {
+  background-color: #fff;
+  margin: 10px;
+  border-radius: 8px;
+  padding: 10px 0;
+}
+
+.order-status {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+}
+
+.status-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.menu-list {
+  margin: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.menu-item {
+  padding: 15px;
+  font-size: 15px;
+  border-bottom: 1px solid #f4f4f4;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.arrow {
+  color: #ccc;
+}】
+
+miniprogram/pages\mine\mine.ts：
+【// pages/mine/mine.ts
+Page({
+  data: {
+    userInfo: {
+      avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+      nickName: '电竞大神',
+    }
+  },
+  onLoad() {},
+});】
+
+miniprogram/pages\mine\mine.wxml：
+【<navigation-bar title="我的" back="{{false}}" color="black" background="#f4f4f4"></navigation-bar>
+<view class="mine-container">
+  <view class="user-profile">
+    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    <view class="user-info">
+      <text class="nickname">{{userInfo.nickName}}</text>
+      <text class="user-id">ID: 123456</text>
+    </view>
+  </view>
+
+  <view class="order-section">
+    <view class="order-status">
+      <view class="status-item">
+        <image class="status-icon" src="/assets/images/icons/wallet.png"/>
+        <text>待付款</text>
+      </view>
+      <view class="status-item">
+        <image class="status-icon" src="/assets/images/icons/going.png"/>
+        <text>进行中</text>
+      </view>
+      <view class="status-item">
+        <image class="status-icon" src="/assets/images/icons/star.png"/>
+        <text>待评价</text>
+      </view>
+      <view class="status-item">
+        <image class="status-icon" src="/assets/images/icons/document.png"/>
+        <text>全部订单</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="menu-list">
+    <navigator class="menu-item" url="/pages/about/about">
+      <text>关于我们</text>
+      <text class="arrow"></text>
+    </navigator>
+     <view class="menu-item">
+      <text>我的客服</text>
+      <text class="arrow"></text>
+    </view>
+    <view class="menu-item">
+      <text>设置</text>
+      <text class="arrow"></text>
+    </view>
+  </view>
+</view>】
+
+miniprogram/pages\product-detail\product-detail.json：
+【{ "usingComponents": { "navigation-bar": "/components/navigation-bar/navigation-bar" } }】
+
+miniprogram/pages\product-detail\product-detail.less：
+【.detail-container { padding: 15px; }
+.product-image { width: 100%; height: 250px; border-radius: 8px; margin-bottom: 15px; }
+.product-info { margin-bottom: 20px; }
+.price { font-size: 24px; color: #ff4d4f; font-weight: bold; }
+.name { font-size: 18px; font-weight: bold; margin: 10px 0; }
+.details { font-size: 14px; color: #666; }
+.comments-section .title { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+.comment { font-size: 14px; padding: 10px; background-color: #f9f9f9; border-radius: 5px; }】
+
+miniprogram/pages\product-detail\product-detail.ts：
+【// pages/product-detail/product-detail.ts
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload() {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh() {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom() {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage() {
+
+  }
+})】
+
+miniprogram/pages\product-detail\product-detail.wxml：
+【<navigation-bar title="商单详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+<view class="detail-container">
+  <image class="product-image" src="/images/mock/product1.jpg" mode="aspectFill"></image>
+  <view class="product-info">
+    <view class="price">¥50.00</view>
+    <view class="name">王者荣耀-荣耀王者陪练</view>
+    <view class="details">
+      <text>这里是详细的服务描述，介绍服务内容、时长、以及注意事项等。</text>
+    </view>
+  </view>
+  <view class="comments-section">
+    <view class="title">用户评价(120)</view>
+    <view class="comment">
+      <text>大神非常给力，下次还来！</text>
+    </view>
+  </view>
+</view>】
+
+miniprogram/pages\shop\shop.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}】
+
+miniprogram/pages\shop\shop.less：
+【/* pages/shop/shop.wxss */
+/* pages/shop/shop.less */
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #f4f4f4;
+}
+
+.search-bar {
+  padding: 8px;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.search-input {
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 5px 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.promo-swiper {
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+}
+
+.icon-nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: white;
+  padding: 15px 0;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+}
+
+.nav-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.recommend-section {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card {
+  display: flex;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.product-card:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin-right: 15px;
+  background-color: #eee;
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.product-meta {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.product-views {
+  margin-right: 10px;
+}
+
+.product-price {
+  font-size: 16px;
+  color: #ff4d4f;
+  font-weight: bold;
+}】
+
+miniprogram/pages\shop\shop.ts：
+【// pages/shop/shop.ts
+Page({
+  data: {
+    swiperItems: [
+      { imageUrl: '/assets/images/mock/banner1.png' },
+      { imageUrl: '/assets/images/mock/banner2.png' },
+      { imageUrl: '/assets/images/mock/banner3.png' }
+    ],
+    navItems: [
+      { name: '段位提升', iconUrl: '/assets/images/icons/rank-up.png' },
+      { name: '大神陪练', iconUrl: '/assets/images/icons/pro-player.png' },
+      { name: '技能教学', iconUrl: '/assets/images/icons/tutorial.png' },
+      { name: '娱乐开黑', iconUrl: '/assets/images/icons/fun-game.png' }
+    ],
+    products: [
+      { id: 1, name: '王者荣耀-荣耀王者陪练', price: '50', sales: 120, views: 1500, imageUrl: '/assets/images/mock/banner1.png' },
+      { id: 2, name: '英雄联盟-钻石到大师', price: '300', sales: 45, views: 2300, imageUrl: '/assets/images/mock/banner2.png' },
+      { id: 3, name: '金铲铲-大师教学局', price: '30', sales: 300, views: 800, imageUrl: '/assets/images/mock/banner3.png' }
+    ]
+  },
+  onLoad() {},
+});】
+
+miniprogram/pages\shop\shop.wxml：
+【<navigation-bar title="店铺" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<view class="shop-container">
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索大神或服务" />
+  </view>
+
+  <swiper class="promo-swiper" indicator-dots autoplay circular>
+    <swiper-item wx:for="{{swiperItems}}" wx:key="index">
+      <image src="{{item.imageUrl}}" class="swiper-image" mode="widthFix"/>
+    </swiper-item>
+  </swiper>
+
+  <view class="icon-nav">
+    <view class="nav-item" wx:for="{{navItems}}" wx:key="index">
+      <image src="{{item.iconUrl}}" class="nav-icon"/>
+      <text class="nav-text">{{item.name}}</text>
+    </view>
+  </view>
+
+  <view class="recommend-section">
+    <view class="section-title">精选推荐</view>
+    <view class="product-list">
+      <navigator url="/pages/product-detail/product-detail" class="product-card" wx:for="{{products}}" wx:key="id">
+        <image class="product-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="product-info">
+          <view class="product-name">{{item.name}}</view>
+          <view class="product-meta">
+            <text class="product-views">{{item.views}}人浏览</text>
+            <text class="product-sales">已售{{item.sales}}</text>
+          </view>
+          <view class="product-price">¥{{item.price}}</view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view>】
+
+miniprogram/pages\zone\zone.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}】
+
+miniprogram/pages\zone\zone.less：
+【/* pages/zone/zone.less */
+.zone-container {
+  display: flex;
+  height: calc(100vh - 50px); /* 50px is a guess for nav-bar height */
+}
+
+.category-sidebar {
+  width: 100px;
+  background-color: #f7f7f7;
+  height: 100%;
+}
+
+.category-item {
+  padding: 15px 10px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.category-item.active {
+  background-color: #ffffff;
+  font-weight: bold;
+  color: #1296db;
+}
+
+.product-content {
+  flex: 1;
+  height: 100%;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.product-card-zone {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.product-image-zone {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.product-info-zone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.product-name-zone {
+  font-size: 14px;
+}
+
+.product-sales-zone {
+  font-size: 12px;
+  color: #999;
+}
+
+.product-price-zone {
+  font-size: 15px;
+  color: #ff4d4f;
+  font-weight: bold;
+}】
+
+miniprogram/pages\zone\zone.ts：
+【type Product = {
+  id: number;
+  name: string;
+  price: string;
+  sales: number;
+  imageUrl: string;
+};
+
+const allProducts: Record<number, Product[]> = {
+   1: [ // 英雄联盟
+    { id: 101, name: '峡谷之巅-大师陪练', price: '80', sales: 50, imageUrl: '/assets/images/mock/banner2.png' },
+    { id: 102, name: '全英雄教学', price: '40', sales: 120, imageUrl: '/assets/images/mock/banner2.png' }
+  ],
+  2: [ // 王者荣耀
+    { id: 201, name: '荣耀王者-陪玩带飞', price: '50', sales: 250, imageUrl: '/assets/images/mock/banner1.png' },
+    { id: 202, name: '国服打野教学', price: '100', sales: 80, imageUrl: '/assets/images/mock/banner1.png' }
+  ],
+  3: [ // 金铲铲
+    { id: 301, name: '大师冲分', price: '30', sales: 500, imageUrl: '/assets/images/mock/banner3.png' }
+  ],
+};
+
+Page({
+  data: {
+    categories: [
+      { id: 1, name: '英雄联盟' },
+      { id: 2, name: '王者荣耀' },
+      { id: 3, name: '金铲铲' }
+    ],
+    products: [] as Product[], // ✅ 显式声明类型,
+    activeCategoryId: 1,
+  },
+
+  onLoad() {
+    this.loadProducts();
+  },
+
+  onCategoryTap(e: any) {
+    const id = e.currentTarget.dataset.id;
+    this.setData({
+      activeCategoryId: id
+    });
+    this.loadProducts();
+  },
+  
+  loadProducts() {
+    this.setData({
+      products: allProducts[this.data.activeCategoryId]
+    });
+  }
+});】
+
+miniprogram/pages\zone\zone.wxml：
+【<navigation-bar title="专区" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<view class="zone-container">
+  <scroll-view class="category-sidebar" scroll-y>
+    <view
+      wx:for="{{categories}}"
+      wx:key="id"
+      class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
+      bindtap="onCategoryTap"
+      data-id="{{item.id}}">
+      {{item.name}}
+    </view>
+  </scroll-view>
+
+  <scroll-view class="product-content" scroll-y>
+    <view class="product-list">
+       <navigator url="/pages/product-detail/product-detail" class="product-card-zone" wx:for="{{products}}" wx:key="id">
+        <image class="product-image-zone" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="product-info-zone">
+          <view class="product-name-zone">{{item.name}}</view>
+          <view class="product-sales-zone">已售{{item.sales}}</view>
+          <view class="product-price-zone">¥{{item.price}}</view>
+        </view>
+      </navigator>
+    </view>
+  </scroll-view>
+</view>】
+
+miniprogram/utils\request.ts：
+【】
+
+miniprogram/utils\util.ts：
+【export const formatTime = (date: Date) => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+
+  return (
+    [year, month, day].map(formatNumber).join('/') +
+    ' ' +
+    [hour, minute, second].map(formatNumber).join(':')
+  )
+}
+
+const formatNumber = (n: number) => {
+  const s = n.toString()
+  return s[1] ? s : '0' + s
+}
+】
+

@@ -1,0 +1,117 @@
+
+.mine-container {
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+/* 顶部渐变背景（颜色调浅）*/
+.header-gradient {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80rpx 0 50rpx;
+  /* 调整为更柔和的浅色渐变 */
+  background: linear-gradient(135deg, #e8f0ff 0%, #ffeefd 100%);
+  border-bottom-left-radius: 60rpx;
+  border-bottom-right-radius: 60rpx;
+}
+
+.avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: #ffffff;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nickname {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333333;
+}
+
+.user-id {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #888888;
+}
+
+/* 订单卡片 */
+.order-card {
+  margin: 30rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.order-all {
+  font-size: 26rpx;
+  color: #999999;
+}
+
+.order-status {
+  display: flex;
+  justify-content: space-around;
+  padding: 40rpx 0;
+  text-align: center;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24rpx;
+  color: #333333;
+}
+
+.status-icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 菜单列表 */
+.menu-list {
+  margin: 30rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx;
+  font-size: 30rpx;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.arrow::after {
+  content: '›';
+  display: block;
+  transform: scale(1.2);
+  color: #cccccc;
+}
