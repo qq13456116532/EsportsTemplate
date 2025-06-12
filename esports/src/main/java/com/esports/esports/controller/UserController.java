@@ -1,6 +1,5 @@
 package com.esports.esports.controller;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
