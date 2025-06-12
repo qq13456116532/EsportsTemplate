@@ -1,23 +1,37 @@
-<!-- pages/mine/mine.wxml -->
 <navigation-bar title="个人中心" back="{{false}}" color="black" background="#ffffff"></navigation-bar>
 <view class="mine-container">
-  <!-- 顶部头像 + 昵称区（渐变背景） -->
-  <view class="header-gradient" bindtap="goToLogin">
-    <image class="avatar" src="{{userInfo.avatarUrl || '/assets/images/icons/defaultUser.svg'}}"></image>
-    <view class="user-info">
-      <text class="nickname">{{userInfo.nickName || '立即登录'}}</text>
-      <text wx:if="{{userInfo.nickName}}" class="user-id">ID: 123456</text>
-    </view>
+  <view class="header-gradient">
+    <block wx:if="{{userInfo}}">
+      <button class="avatar-button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        <image class="avatar" src="{{userInfo.avatarUrl || '/assets/images/icons/defaultUser.svg'}}"></image>
+      </button>
+      <view class="user-info">
+        <input 
+          type="nickname" 
+          class="nickname-input" 
+          value="{{userInfo.nickName}}" 
+          bind:change="onNicknameChange" 
+          placeholder="请填写昵称"
+        />
+        <text wx:if="{{userInfo.nickName}}" class="user-id">ID: 123456</text>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="login-prompt" bindtap="goToLogin">
+        <image class="avatar" src="{{userInfo.avatarUrl || '/assets/images/icons/defaultUser.svg'}}"></image>
+        <view class="user-info">
+          <text class="nickname">{{userInfo.nickName || '立即登录'}}</text>
+        </view>
+      </view>
+    </block>
   </view>
 
-  <!-- 陪玩订单卡片（保持原有 4 个状态功能） -->
   <view class="order-card">
     <view class="order-header">
       <text class="order-title">陪玩订单</text>
       <navigator url="/pages/order/order" class="order-all">全部 </navigator>
     </view>
-
-    <!-- 保持原功能：四个状态 -->
     <view class="order-status">
       <view class="status-item" bindtap="goToPendingPay">
         <image class="status-icon" src="/assets/images/icons/wallet.png"/>
@@ -38,7 +52,6 @@
     </view>
   </view>
 
-  <!-- 菜单列表（保持原功能） -->
   <view class="menu-list">
     <navigator class="menu-item" url="/pages/about/about">
       <text>关于我们</text>

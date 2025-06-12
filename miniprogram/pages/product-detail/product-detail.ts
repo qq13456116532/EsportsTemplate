@@ -1,4 +1,5 @@
 import { request } from '../../utils/request';
+import { ensureLogin } from '../../utils/util';
 
 Page({
   data: {
@@ -22,6 +23,7 @@ Page({
           product, 
           isFavorited: product.isFavorited || false 
         });
+        this.checkFavoriteStatus(product.id);
         this.loadComments(product.id);
         wx.hideLoading();
       })
@@ -51,37 +53,36 @@ Page({
     wx.navigateBack();
   },
   onBuyNow() {
-    // 检查登录状态
-    const token = wx.getStorageSync('token');
-
-    if (!token) {
-      // 如果没有token，则跳转到登录页面
-      wx.navigateTo({
-        url: '/pages/login/login',
-      });
-    } else {
-      // 如果有token，则正常跳转到购买页面
-      wx.navigateTo({
-        url: `/pages/order-confirm/order-confirm?id=${this.data.product?.id}`,
-      });
-    }
+    if (!ensureLogin()) return;
+    wx.navigateTo({
+      url: `/pages/order-confirm/order-confirm?id=${this.data.product?.id}`,
+    });
   },
 
   onToggleFavorite() {
-    const current = this.data.isFavorited;
-    // 模拟收藏/取消收藏动作，可替换为请求接口
-    this.setData({ isFavorited: !current });
+    if (!ensureLogin()) return;           // 未登录先跳登录
+    const { isFavorited, product } = this.data;
+    this.syncFavorite(product!.id, !isFavorited)
+        .then(() => {
+          this.setData({ isFavorited: !isFavorited });
+          wx.showToast({ title: isFavorited ? '已取消收藏' : '已收藏', icon: 'success' });
+        })
+        .catch(() => wx.showToast({ title: '操作失败', icon: 'none' }));
+  },
+  /** 查询是否已收藏（有 token 时才发请求） */
+  checkFavoriteStatus(productId: number) {
+    const token = wx.getStorageSync('token');
+    if (!token) return;           // 未登录直接跳过
+    request({ url: `/favorites/${productId}` })
+      .then((fav: boolean) => this.setData({ isFavorited: fav }));
+  },
 
-    wx.showToast({
-      title: current ? '已取消收藏' : '已收藏',
-      icon: 'success',
-    });
-
-    // 也可以在此发送请求更新后端状态：
-    // request({ 
-    //   url: `/user/favorites/${this.data.product.id}`, 
-    //   method: current ? 'DELETE' : 'POST' 
-    // });
+  /** 后端同步收藏状态 */
+  syncFavorite(productId: number, add: boolean) {
+    const method = add ? 'POST' : 'DELETE';
+    const url    = add ? '/favorites' : `/favorites/${productId}`;
+    const data   = add ? { productId } : undefined;
+    return request({ url, method, data });
   },
 
   onShareAppMessage() {

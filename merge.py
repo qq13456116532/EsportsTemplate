@@ -28,8 +28,8 @@ def save_multiple_folders_to_txt(paths, output_file):
                     out.write(f'{path}：\n【无法读取文件：{e}】\n\n')
 
 # 示例用法：指定多个文件夹
-# folders = ['miniprogram/components', 'miniprogram/pages', 'miniprogram/utils', 'esports/src']
-folders = ['miniprogram/components', 'miniprogram/pages', 'miniprogram/utils']
+folders = ['miniprogram/components', 'miniprogram/pages', 'miniprogram/utils', 'esports/src']
+# folders = ['miniprogram/components', 'miniprogram/pages', 'miniprogram/utils']
 output_file = 'all_contents.txt'
 
 save_multiple_folders_to_txt(folders, output_file)

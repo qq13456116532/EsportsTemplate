@@ -2,35 +2,34 @@ package com.esports.esports.controller;
 
 import com.esports.esports.model.PlayerOrder;
 import com.esports.esports.model.OrderStatus;
+import com.esports.esports.service.AuthService;
 import com.esports.esports.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/orders")
-@RequiredArgsConstructor
 public class OrderController {
-    
-    private final OrderService orderService;
 
-    // A placeholder for the user ID. In a real app, this would come from a security context (e.g., JWT).
-    private static final Long MOCK_USER_ID = 1L;
+    private final OrderService orderService;
+    private final AuthService  authService;  // ← 新增
 
     @GetMapping
-    public ResponseEntity<List<PlayerOrder>> getUserOrders(@RequestParam(required = false) String status) {
-        List<PlayerOrder> orders;
+    public ResponseEntity<List<PlayerOrder>> getUserOrders(@RequestHeader("Authorization") String authHeader,
+                                                           @RequestParam(required = false) String status) {
+        Long uid = authService.currentUserId(authHeader);
+
         if (status != null && !status.isEmpty()) {
             try {
                 OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
-                orders = orderService.getOrdersForUserByStatus(MOCK_USER_ID, orderStatus);
+                return ResponseEntity.ok(orderService.getOrdersForUserByStatus(uid, orderStatus));
             } catch (IllegalArgumentException e) {
-                return ResponseEntity.badRequest().build(); // Invalid status
+                return ResponseEntity.badRequest().build();
             }
-        } else {
-            orders = orderService.getOrdersForUser(MOCK_USER_ID);
         }
-        return ResponseEntity.ok(orders);
+        return ResponseEntity.ok(orderService.getOrdersForUser(uid));
     }
 }

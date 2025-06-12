@@ -1,5 +1,5 @@
 <!-- pages/login/login.wxml -->
-<navigation-bar title="登录" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="登录" back="{{true}}" color="black" background="#FFF"></navigation-bar>
 
 <view class="login-container">
   <view class="login-panel">
@@ -42,10 +42,11 @@
       登录
     </button>
 
-    <!-- 手机号快捷登录 -->
+    <!-- 微信快捷登录 -->
     <button class="btn btn-success"
-            bindtap="loginByPhone">
-      手机号快捷登录
+            bindtap="loginByWechat"
+            loading="{{!canSubmit}}">
+      微信快捷登录
     </button>
 
     <!-- 密码登录 -->
