@@ -5,105 +5,6 @@ miniprogram/components\navigation-bar\navigation-bar.json：
   "usingComponents": {}
 }】
 
-miniprogram/components\navigation-bar\navigation-bar.less：
-【.weui-navigation-bar {
-  --weui-FG-0:rgba(0,0,0,.9);
-  --height: 44px;
-  --left: 16px;
-}
-.weui-navigation-bar .android {
-  --height: 48px;
-}
-
-.weui-navigation-bar {
-  overflow: hidden;
-  color: var(--weui-FG-0);
-  flex: none;
-}
-
-.weui-navigation-bar__inner {
-  position: relative;
-  top: 0;
-  left: 0;
-  height: calc(var(--height) + env(safe-area-inset-top));
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding-top: env(safe-area-inset-top);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.weui-navigation-bar__left {
-  position: relative;
-  padding-left: var(--left);
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.weui-navigation-bar__btn_goback_wrapper {
-  padding: 11px 18px 11px 16px;
-  margin: -11px -18px -11px -16px;
-}
-
-.weui-navigation-bar__btn_goback_wrapper.weui-active {
-  opacity: 0.5;
-}
-
-.weui-navigation-bar__btn_goback {
-  font-size: 12px;
-  width: 12px;
-  height: 24px;
-  -webkit-mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E") no-repeat 50% 50%;
-  mask: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='24' viewBox='0 0 12 24'%3E  %3Cpath fill-opacity='.9' fill-rule='evenodd' d='M10 19.438L8.955 20.5l-7.666-7.79a1.02 1.02 0 0 1 0-1.42L8.955 3.5 10 4.563 2.682 12 10 19.438z'/%3E%3C/svg%3E") no-repeat 50% 50%;
-  -webkit-mask-size: cover;
-  mask-size: cover;
-  background-color: var(--weui-FG-0);
-}
-
-.weui-navigation-bar__center {
-  font-size: 17px;
-  text-align: center;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  flex: 1;
-  height: 100%;
-}
-
-.weui-navigation-bar__loading {
-  margin-right: 4px;
-  align-items: center;
-}
-
-.weui-loading {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  display: block;
-  background: transparent url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='80px' height='80px' viewBox='0 0 80 80' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eloading%3C/title%3E%3Cdefs%3E%3ClinearGradient x1='94.0869141%25' y1='0%25' x2='94.0869141%25' y2='90.559082%25' id='linearGradient-1'%3E%3Cstop stop-color='%23606060' stop-opacity='0' offset='0%25'%3E%3C/stop%3E%3Cstop stop-color='%23606060' stop-opacity='0.3' offset='100%25'%3E%3C/stop%3E%3C/linearGradient%3E%3ClinearGradient x1='100%25' y1='8.67370605%25' x2='100%25' y2='90.6286621%25' id='linearGradient-2'%3E%3Cstop stop-color='%23606060' offset='0%25'%3E%3C/stop%3E%3Cstop stop-color='%23606060' stop-opacity='0.3' offset='100%25'%3E%3C/stop%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' opacity='0.9'%3E%3Cg%3E%3Cpath d='M40,0 C62.09139,0 80,17.90861 80,40 C80,62.09139 62.09139,80 40,80 L40,73 C58.2253967,73 73,58.2253967 73,40 C73,21.7746033 58.2253967,7 40,7 L40,0 Z' fill='url(%23linearGradient-1)'%3E%3C/path%3E%3Cpath d='M40,0 L40,7 C21.7746033,7 7,21.7746033 7,40 C7,58.2253967 21.7746033,73 40,73 L40,80 C17.90861,80 0,62.09139 0,40 C0,17.90861 17.90861,0 40,0 Z' fill='url(%23linearGradient-2)'%3E%3C/path%3E%3Ccircle id='Oval' fill='%23606060' cx='40.5' cy='3.5' r='3.5'%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A") no-repeat;
-  background-size: 100%;
-  margin-left: 0;
-  animation: loading linear infinite 1s;
-}
-
-@keyframes loading {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-】
-
 miniprogram/components\navigation-bar\navigation-bar.ts：
 【Component({
   options: {
@@ -282,9 +183,6 @@ miniprogram/components\navigation-bar\navigation-bar.wxml：
 miniprogram/pages\about\about.json：
 【{ "usingComponents": { "navigation-bar": "/components/navigation-bar/navigation-bar" } }】
 
-miniprogram/pages\about\about.less：
-【/* pages/about/about.wxss */】
-
 miniprogram/pages\about\about.ts：
 【// pages/about/about.ts
 Page({
@@ -365,70 +263,6 @@ miniprogram/pages\index\index.json：
     "navigation-bar": "/components/navigation-bar/navigation-bar"
   }
 }】
-
-miniprogram/pages\index\index.less：
-【/**index.less**/
-page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.scrollarea {
-  flex: 1;
-  overflow-y: hidden;
-}
-
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #aaa;
-  width: 80%;
-}
-
-.userinfo-avatar {
-  overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
-
-.usermotto {
-  margin-top: 200px;
-}
-.avatar-wrapper {
-  padding: 0;
-  width: 56px !important;
-  border-radius: 8px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.avatar {
-  display: block;
-  width: 56px;
-  height: 56px;
-}
-
-.nickname-wrapper {
-  display: flex;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  border-top: .5px solid rgba(0, 0, 0, 0.1);
-  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
-  color: black;
-}
-
-.nickname-label {
-  width: 105px;
-}
-
-.nickname-input {
-  flex: 1;
-}
-】
 
 miniprogram/pages\index\index.ts：
 【// index.ts
@@ -525,25 +359,6 @@ miniprogram/pages\logs\logs.json：
   }
 }】
 
-miniprogram/pages\logs\logs.less：
-【page {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.scrollarea {
-  flex: 1;
-  overflow-y: hidden;
-}
-.log-item {
-  margin-top: 20rpx;
-  text-align: center;
-}
-.log-item:last-child {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-】
-
 miniprogram/pages\logs\logs.ts：
 【// logs.ts
 // const util = require('../../utils/util.js')
@@ -585,97 +400,12 @@ miniprogram/pages\mine\mine.json：
   }
 }】
 
-miniprogram/pages\mine\mine.less：
-【/* pages/mine/mine.less */
-.mine-container {
-  background-color: #f4f4f4;
-  height: 100vh;
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background-color: #fff;
-}
-
-.avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-right: 15px;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.nickname {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.user-id {
-  font-size: 14px;
-  color: #888;
-}
-
-.order-section {
-  background-color: #fff;
-  margin: 10px;
-  border-radius: 8px;
-  padding: 10px 0;
-}
-
-.order-status {
-  display: flex;
-  justify-content: space-around;
-  text-align: center;
-}
-
-.status-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 12px;
-}
-
-.status-icon {
-  width: 30px;
-  height: 30px;
-  margin-bottom: 5px;
-}
-
-.menu-list {
-  margin: 10px;
-  border-radius: 8px;
-  background-color: #fff;
-  overflow: hidden;
-}
-
-.menu-item {
-  padding: 15px;
-  font-size: 15px;
-  border-bottom: 1px solid #f4f4f4;
-  display: flex;
-  justify-content: space-between;
-}
-
-.menu-item:last-child {
-  border-bottom: none;
-}
-
-.arrow {
-  color: #ccc;
-}】
-
 miniprogram/pages\mine\mine.ts：
 【// pages/mine/mine.ts
 Page({
   data: {
     userInfo: {
-      avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+      avatarUrl: '/assets/images/icons/defaultUser.svg',
       nickName: '电竞大神',
     }
   },
@@ -683,47 +413,57 @@ Page({
 });】
 
 miniprogram/pages\mine\mine.wxml：
-【<navigation-bar title="我的" back="{{false}}" color="black" background="#f4f4f4"></navigation-bar>
+【<!-- pages/mine/mine.wxml -->
+<navigation-bar title="个人中心" back="{{false}}" color="black" background="#ffffff"></navigation-bar>
 <view class="mine-container">
-  <view class="user-profile">
-    <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+  <!-- 顶部头像 + 昵称区（渐变背景） -->
+  <view class="header-gradient">
+    <image class="avatar" src="{{userInfo.avatarUrl || '/assets/images/icons/defaultUser.svg'}}"></image>
     <view class="user-info">
-      <text class="nickname">{{userInfo.nickName}}</text>
-      <text class="user-id">ID: 123456</text>
+      <text class="nickname">{{userInfo.nickName || '立即登录'}}</text>
+      <text wx:if="{{userInfo.nickName}}" class="user-id">ID: 123456</text>
     </view>
   </view>
 
-  <view class="order-section">
+  <!-- 陪玩订单卡片（保持原有 4 个状态功能） -->
+  <view class="order-card">
+    <view class="order-header">
+      <text class="order-title">陪玩订单</text>
+      <navigator url="/pages/order/order" class="order-all">全部 </navigator>
+    </view>
+
+    <!-- 保持原功能：四个状态 -->
     <view class="order-status">
-      <view class="status-item">
+      <view class="status-item" bindtap="goToPendingPay">
         <image class="status-icon" src="/assets/images/icons/wallet.png"/>
         <text>待付款</text>
       </view>
-      <view class="status-item">
+      <view class="status-item" bindtap="goToOngoing">
         <image class="status-icon" src="/assets/images/icons/going.png"/>
         <text>进行中</text>
       </view>
-      <view class="status-item">
+      <view class="status-item" bindtap="goToPendingComment">
         <image class="status-icon" src="/assets/images/icons/star.png"/>
         <text>待评价</text>
       </view>
-      <view class="status-item">
+      <view class="status-item" bindtap="goToAllOrders">
         <image class="status-icon" src="/assets/images/icons/document.png"/>
         <text>全部订单</text>
       </view>
     </view>
   </view>
-  
+
+  <!-- 菜单列表（保持原功能） -->
   <view class="menu-list">
     <navigator class="menu-item" url="/pages/about/about">
       <text>关于我们</text>
       <text class="arrow"></text>
     </navigator>
-     <view class="menu-item">
+    <view class="menu-item" bindtap="contactService">
       <text>我的客服</text>
       <text class="arrow"></text>
     </view>
-    <view class="menu-item">
+    <view class="menu-item" bindtap="openSetting">
       <text>设置</text>
       <text class="arrow"></text>
     </view>
@@ -733,102 +473,176 @@ miniprogram/pages\mine\mine.wxml：
 miniprogram/pages\product-detail\product-detail.json：
 【{ "usingComponents": { "navigation-bar": "/components/navigation-bar/navigation-bar" } }】
 
-miniprogram/pages\product-detail\product-detail.less：
-【.detail-container { padding: 15px; }
-.product-image { width: 100%; height: 250px; border-radius: 8px; margin-bottom: 15px; }
-.product-info { margin-bottom: 20px; }
-.price { font-size: 24px; color: #ff4d4f; font-weight: bold; }
-.name { font-size: 18px; font-weight: bold; margin: 10px 0; }
-.details { font-size: 14px; color: #666; }
-.comments-section .title { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
-.comment { font-size: 14px; padding: 10px; background-color: #f9f9f9; border-radius: 5px; }】
-
 miniprogram/pages\product-detail\product-detail.ts：
-【// pages/product-detail/product-detail.ts
+【import { request } from '../../utils/request';
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    product: null as Product | null,
+    isFavorited: false, // 默认未收藏
+    comments: [] as Comment[], 
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad() {
-
+  onLoad(options: { id?: string }) {
+    if (options.id) {
+      this.loadProductDetail(options.id);
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  loadProductDetail(productId: string) {
+    wx.showLoading({ title: '加载中...' });
+    request({ url: `/shop/products/${productId}` })
+      .then(product => {
+        // 假设接口返回 product.isFavorited 字段用于收藏状态
+        this.setData({ 
+          product, 
+          isFavorited: product.isFavorited || false 
+        });
+        this.loadComments(product.id);
+        wx.hideLoading();
+      })
+      .catch(() => wx.hideLoading());
+  },
+  loadComments(productId: number) {
+    request({ url: `/comments`, data: { productId } })
+      .then((comments: Comment[]) => {
+        // 为了复用现有 WXML，先做一次映射
+        const formatted = comments.map(c => ({
+          id: c.id,
+          username: c.username,
+          avatar: c.avatar,
+          content: c.content,
+          rating: c.rating ?? 5,
+          timestamp: c.timestamp,
+        }));
+        this.setData({ comments: formatted });
+      })
+      .catch(() => {
+        wx.showToast({ title: '评论加载失败', icon: 'none' });
+      });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
 
+  onBackToShop() {
+    wx.navigateBack();
+  },
+  //点击店铺返回主页
+  OnBack(){
+    wx.navigateTo({
+      url: `/pages/shop/shop`,
+    });
+  },
+  onBuyNow() {
+    wx.navigateTo({
+      url: `/pages/order-confirm/order-confirm?id=${this.data.product?.id}`,
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
+  onToggleFavorite() {
+    const current = this.data.isFavorited;
+    // 模拟收藏/取消收藏动作，可替换为请求接口
+    this.setData({ isFavorited: !current });
 
+    wx.showToast({
+      title: current ? '已取消收藏' : '已收藏',
+      icon: 'success',
+    });
+
+    // 也可以在此发送请求更新后端状态：
+    // request({ 
+    //   url: `/user/favorites/${this.data.product.id}`, 
+    //   method: current ? 'DELETE' : 'POST' 
+    // });
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage() {
-
+    return {
+      title: this.data.product ? this.data.product.name : '查看商单详情',
+      path: `/pages/product-detail/product-detail?id=${this.data.product?.id}`,
+    };
   }
-})】
+});
+】
 
 miniprogram/pages\product-detail\product-detail.wxml：
-【<navigation-bar title="商单详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-<view class="detail-container">
-  <image class="product-image" src="/images/mock/product1.jpg" mode="aspectFill"></image>
-  <view class="product-info">
-    <view class="price">¥50.00</view>
-    <view class="name">王者荣耀-荣耀王者陪练</view>
-    <view class="details">
-      <text>这里是详细的服务描述，介绍服务内容、时长、以及注意事项等。</text>
+【<navigation-bar title="商品详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="page-container" wx:if="{{product}}">
+  <image class="product-image" src="{{product.imageUrl}}" mode="widthFix"></image>
+
+  <view class="info-card">
+    <view class="price-section">
+      <view class="price-wrapper">
+        <text class="price-symbol">¥</text>
+        <text class="price-main">{{product.price}}</text>
+      </view>
+      <view class="old-price">¥38888.00</view>
+      <view class="favorite-btn" bindtap="onToggleFavorite">
+        <image 
+          class="favorite-icon" 
+          src="{{isFavorited ? '/assets/images/icons/heart-fill.svg' : '/assets/images/icons/heart_line.svg'}}"
+        />
+      </view>
+    </view>
+    <view class="product-title-section">
+        <view class="product-name">{{product.name}}</view>
+        <view class="product-subname">两万八千八百八十八，非心复苏带回家 (赵哥专属)</view>
     </view>
   </view>
-  <view class="comments-section">
-    <view class="title">用户评价(120)</view>
-    <view class="comment">
-      <text>大神非常给力，下次还来！</text>
+  
+  <view class="shop-card">
+    <image class="shop-logo" src="/assets/images/icons/defaultUser.svg"></image>
+    <view class="shop-info">
+      <text class="shop-name">速凌电竞</text>
+      <text class="shop-fans">1938粉丝</text>
+    </view>
+    <button class="follow-btn">+ 关注</button>
+  </view>
+
+  <view class="detail-card">
+    <view class="card-title">详情</view>
+    <view class="detail-content">
+      <text>{{product.description}}</text>
+      <text>\n\n1.下单之后等待打手接单，打手接单后10分钟之内，打手将根据老板您所提供的游戏昵称或ID,添加您的游戏好友如若15分钟之内没有打手添加您的好友，您可以扫码或直接联系客服。</text>
+      <text>\n\n2.速凌电竞俱乐部，所有订单不卡保底，以最终撤离为准</text>
     </view>
   </view>
-</view>】
+
+  <view class="comment-card">
+  <view class="card-title">用户评论</view>
+  <view class="comment-item" wx:for="{{comments}}" wx:key="id">
+    <view class="comment-header">
+      <image class="avatar" src="{{item.avatar}}" />
+      <view class="user-info">
+        <text class="username">{{item.username}}</text>
+        <text class="timestamp">{{item.timestamp}}</text>
+      </view>
+    </view>
+    <view class="comment-content">{{item.content}}</view>
+  </view>
+  <view wx:if="{{comments.length === 0}}" class="no-comment">
+  <image class="empty-sofa-image" src="/assets/images/icons/empty-sofa.svg" mode="widthFix"></image>
+  <text>暂无更多评论</text>
+</view>
+</view>
+
+
+</view>
+
+<view class="loading-container" wx:else>
+  <text>商品加载中或已下架...</text>
+</view>
+
+<view class="bottom-bar">
+  <view class="shop-entry" bindtap="OnBack">
+    <image class="shop-icon" src="/assets/images/icons/shop.svg"></image>
+    <text>店铺</text>
+  </view>
+  <button class="buy-now-btn" bindtap="onBuyNow">立即购买</button>
+</view>
+
+
+】
 
 miniprogram/pages\shop\shop.json：
 【{
@@ -837,152 +651,52 @@ miniprogram/pages\shop\shop.json：
   }
 }】
 
-miniprogram/pages\shop\shop.less：
-【/* pages/shop/shop.wxss */
-/* pages/shop/shop.less */
-.shop-container {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  background-color: #f4f4f4;
-}
-
-.search-bar {
-  padding: 8px;
-  background-color: white;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.search-input {
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  padding: 5px 15px;
-  text-align: center;
-  font-size: 14px;
-}
-
-.promo-swiper {
-  height: 200px;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 15px;
-}
-
-.swiper-image {
-  width: 100%;
-  height: 100%;
-}
-
-.icon-nav {
-  display: flex;
-  justify-content: space-around;
-  background-color: white;
-  padding: 15px 0;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 12px;
-}
-
-.nav-icon {
-  width: 30px;
-  height: 30px;
-  margin-bottom: 5px;
-}
-
-.recommend-section {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.product-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.product-card {
-  display: flex;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 15px;
-}
-
-.product-card:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-}
-
-.product-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 8px;
-  margin-right: 15px;
-  background-color: #eee;
-}
-
-.product-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.product-name {
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.product-meta {
-  font-size: 12px;
-  color: #888;
-  margin-bottom: 8px;
-}
-
-.product-views {
-  margin-right: 10px;
-}
-
-.product-price {
-  font-size: 16px;
-  color: #ff4d4f;
-  font-weight: bold;
-}】
-
 miniprogram/pages\shop\shop.ts：
-【// pages/shop/shop.ts
+【import { request } from '../../utils/request';
+
 Page({
   data: {
-    swiperItems: [
-      { imageUrl: '/assets/images/mock/banner1.png' },
-      { imageUrl: '/assets/images/mock/banner2.png' },
-      { imageUrl: '/assets/images/mock/banner3.png' }
-    ],
-    navItems: [
-      { name: '段位提升', iconUrl: '/assets/images/icons/rank-up.png' },
-      { name: '大神陪练', iconUrl: '/assets/images/icons/pro-player.png' },
-      { name: '技能教学', iconUrl: '/assets/images/icons/tutorial.png' },
-      { name: '娱乐开黑', iconUrl: '/assets/images/icons/fun-game.png' }
-    ],
-    products: [
-      { id: 1, name: '王者荣耀-荣耀王者陪练', price: '50', sales: 120, views: 1500, imageUrl: '/assets/images/mock/banner1.png' },
-      { id: 2, name: '英雄联盟-钻石到大师', price: '300', sales: 45, views: 2300, imageUrl: '/assets/images/mock/banner2.png' },
-      { id: 3, name: '金铲铲-大师教学局', price: '30', sales: 300, views: 800, imageUrl: '/assets/images/mock/banner3.png' }
-    ]
+    swiperItems: [], // 
+    navItems: [],
+    products: [] // 
   },
-  onLoad() {},
+
+  onLoad() {
+    this.loadShopData();
+  },
+  
+  loadShopData() {
+    wx.showLoading({ title: '加载中...' });
+
+    // Fetch all data in parallel
+    Promise.all([
+      request({ url: '/shop/banners' }), // 
+      request({ url: '/shop/categories' }), // 
+      request({ url: '/shop/products/featured' }) // 
+    ]).then(([banners, categories, products]) => {
+      // The backend doesn't provide icons for categories, so we add them here
+      const navIcons = [
+          '/assets/images/icons/rank-up.svg', 
+          '/assets/images/icons/pro-player.svg', 
+          '/assets/images/icons/tutorial.svg'
+      ];
+      const navItems = categories.map((category: {name: string}, index: number) => ({
+        name: category.name,
+        iconUrl: navIcons[index] || '/assets/images/icons/fun-game.svg' // Provide a default icon
+      }));
+
+      this.setData({
+        swiperItems: banners,
+        navItems: navItems,
+        products: products
+      });
+      wx.hideLoading();
+    }).catch(err => {
+      console.error("Failed to load shop data", err);
+      wx.hideLoading();
+      wx.showToast({ title: '数据加载失败', icon: 'none' });
+    });
+  },
 });】
 
 miniprogram/pages\shop\shop.wxml：
@@ -1008,14 +722,13 @@ miniprogram/pages\shop\shop.wxml：
   <view class="recommend-section">
     <view class="section-title">精选推荐</view>
     <view class="product-list">
-      <navigator url="/pages/product-detail/product-detail" class="product-card" wx:for="{{products}}" wx:key="id">
+      <navigator url="/pages/product-detail/product-detail?id={{item.id}}" class="product-card" wx:for="{{products}}" wx:key="id">
         <image class="product-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
         <view class="product-info">
           <view class="product-name">{{item.name}}</view>
           <view class="product-meta">
             <text class="product-views">{{item.views}}人浏览</text>
-            <text class="product-sales">已售{{item.sales}}</text>
-          </view>
+            <text class="product-sales">已售{{item.sales}}</text> </view>
           <view class="product-price">¥{{item.price}}</view>
         </view>
       </navigator>
@@ -1030,129 +743,58 @@ miniprogram/pages\zone\zone.json：
   }
 }】
 
-miniprogram/pages\zone\zone.less：
-【/* pages/zone/zone.less */
-.zone-container {
-  display: flex;
-  height: calc(100vh - 50px); /* 50px is a guess for nav-bar height */
-}
-
-.category-sidebar {
-  width: 100px;
-  background-color: #f7f7f7;
-  height: 100%;
-}
-
-.category-item {
-  padding: 15px 10px;
-  text-align: center;
-  font-size: 14px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.category-item.active {
-  background-color: #ffffff;
-  font-weight: bold;
-  color: #1296db;
-}
-
-.product-content {
-  flex: 1;
-  height: 100%;
-  padding: 10px;
-  background-color: #ffffff;
-}
-
-.product-card-zone {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.product-image-zone {
-  width: 80px;
-  height: 80px;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.product-info-zone {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.product-name-zone {
-  font-size: 14px;
-}
-
-.product-sales-zone {
-  font-size: 12px;
-  color: #999;
-}
-
-.product-price-zone {
-  font-size: 15px;
-  color: #ff4d4f;
-  font-weight: bold;
-}】
-
 miniprogram/pages\zone\zone.ts：
-【type Product = {
-  id: number;
-  name: string;
-  price: string;
-  sales: number;
-  imageUrl: string;
-};
+【import { request } from '../../utils/request';
 
-const allProducts: Record<number, Product[]> = {
-   1: [ // 英雄联盟
-    { id: 101, name: '峡谷之巅-大师陪练', price: '80', sales: 50, imageUrl: '/assets/images/mock/banner2.png' },
-    { id: 102, name: '全英雄教学', price: '40', sales: 120, imageUrl: '/assets/images/mock/banner2.png' }
-  ],
-  2: [ // 王者荣耀
-    { id: 201, name: '荣耀王者-陪玩带飞', price: '50', sales: 250, imageUrl: '/assets/images/mock/banner1.png' },
-    { id: 202, name: '国服打野教学', price: '100', sales: 80, imageUrl: '/assets/images/mock/banner1.png' }
-  ],
-  3: [ // 金铲铲
-    { id: 301, name: '大师冲分', price: '30', sales: 500, imageUrl: '/assets/images/mock/banner3.png' }
-  ],
-};
 
 Page({
   data: {
-    categories: [
-      { id: 1, name: '英雄联盟' },
-      { id: 2, name: '王者荣耀' },
-      { id: 3, name: '金铲铲' }
-    ],
-    products: [] as Product[], // ✅ 显式声明类型,
-    activeCategoryId: 1,
+    categories: [] as Category[], // 
+    products: [] as Product[],
+    activeCategoryId: null, // Start with no category selected
+    activeCategoryName: '', // 新增字段
   },
 
   onLoad() {
-    this.loadProducts();
+    this.loadCategories();
+  },
+
+  loadCategories() {
+    request({ url: '/shop/categories' }).then(categories => { // 
+      this.setData({
+        categories: categories,
+        activeCategoryId: categories.length > 0 ? categories[0].id : null,
+        activeCategoryName: categories.length > 0 ? categories[0].name : '',
+      });
+      if (this.data.activeCategoryId) {
+        this.loadProducts(); // 
+      }
+    });
   },
 
   onCategoryTap(e: any) {
     const id = e.currentTarget.dataset.id;
-    this.setData({
-      activeCategoryId: id
-    });
+    const name = e.currentTarget.dataset.name;
+    if (id === this.data.activeCategoryId) return;
+    this.setData({ activeCategoryId: id ,activeCategoryName: name});
     this.loadProducts();
   },
   
   loadProducts() {
-    this.setData({
-      products: allProducts[this.data.activeCategoryId]
-    });
+    if (!this.data.activeCategoryId) return;
+    wx.showLoading({ title: '加载中...' });
+    request({ url: `/shop/products?categoryId=${this.data.activeCategoryId}` }).then(products => { // 
+      this.setData({ products: products });
+      wx.hideLoading();
+    }).catch(() => wx.hideLoading());
   }
 });】
 
 miniprogram/pages\zone\zone.wxml：
 【<navigation-bar title="专区" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
 <view class="zone-container">
+  <!-- 左侧分类栏 -->
   <scroll-view class="category-sidebar" scroll-y>
     <view
       wx:for="{{categories}}"
@@ -1160,13 +802,22 @@ miniprogram/pages\zone\zone.wxml：
       class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
       bindtap="onCategoryTap"
       data-id="{{item.id}}">
+      <view class="indicator" wx:if="{{activeCategoryId === item.id}}"></view>
       {{item.name}}
     </view>
   </scroll-view>
 
+  <!-- 右侧内容 -->
   <scroll-view class="product-content" scroll-y>
+    <!-- 当前分类名称 -->
+    <view class="category-title">{{activeCategoryName}}</view>
+
     <view class="product-list">
-       <navigator url="/pages/product-detail/product-detail" class="product-card-zone" wx:for="{{products}}" wx:key="id">
+      <navigator 
+        url="/pages/product-detail/product-detail?id={{item.id}}" 
+        class="product-card-zone" 
+        wx:for="{{products}}" 
+        wx:key="id">
         <image class="product-image-zone" src="{{item.imageUrl}}" mode="aspectFill"></image>
         <view class="product-info-zone">
           <view class="product-name-zone">{{item.name}}</view>
@@ -1176,10 +827,58 @@ miniprogram/pages\zone\zone.wxml：
       </navigator>
     </view>
   </scroll-view>
-</view>】
+</view>
+】
+
+miniprogram/utils\interface.ts：
+【
+type Product = { id: number; name: string; price: string; sales: number; imageUrl: string; }; // 
+
+type Category = {id: number; name: string;};
+
+
+type Comment = {
+  id: number;
+  username: string;   // 后端返回的 user.nickName
+  avatar: string;     // user.avatarUrl
+  content: string;
+  rating: number;
+  timestamp: string;  // ISO 日期或已格式化
+};
+】
 
 miniprogram/utils\request.ts：
-【】
+【const BASE_URL = 'http://127.0.0.1:8080/api'; // Your backend API base URL 
+
+type RequestOptions = {
+  url: string;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  data?: any;
+};
+
+export const request = (options: RequestOptions): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: BASE_URL + options.url,
+      method: options.method || 'GET',
+      data: options.data || {},
+      success: (res) => {
+        if (res.statusCode === 200) {
+          resolve(res.data);
+        } else {
+          reject(res);
+        }
+      },
+      fail: (err) => {
+        wx.showToast({
+          title: '请求失败',
+          icon: 'none'
+        });
+        reject(err);
+      },
+    });
+  });
+};】
 
 miniprogram/utils\util.ts：
 【export const formatTime = (date: Date) => {

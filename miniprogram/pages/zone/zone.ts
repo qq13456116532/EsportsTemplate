@@ -1,51 +1,45 @@
-type Product = {
-  id: number;
-  name: string;
-  price: string;
-  sales: number;
-  imageUrl: string;
-};
+import { request } from '../../utils/request';
 
-const allProducts: Record<number, Product[]> = {
-   1: [ // 英雄联盟
-    { id: 101, name: '峡谷之巅-大师陪练', price: '80', sales: 50, imageUrl: '/assets/images/mock/banner2.png' },
-    { id: 102, name: '全英雄教学', price: '40', sales: 120, imageUrl: '/assets/images/mock/banner2.png' }
-  ],
-  2: [ // 王者荣耀
-    { id: 201, name: '荣耀王者-陪玩带飞', price: '50', sales: 250, imageUrl: '/assets/images/mock/banner1.png' },
-    { id: 202, name: '国服打野教学', price: '100', sales: 80, imageUrl: '/assets/images/mock/banner1.png' }
-  ],
-  3: [ // 金铲铲
-    { id: 301, name: '大师冲分', price: '30', sales: 500, imageUrl: '/assets/images/mock/banner3.png' }
-  ],
-};
 
 Page({
   data: {
-    categories: [
-      { id: 1, name: '英雄联盟' },
-      { id: 2, name: '王者荣耀' },
-      { id: 3, name: '金铲铲' }
-    ],
-    products: [] as Product[], // ✅ 显式声明类型,
-    activeCategoryId: 1,
+    categories: [] as Category[], // 
+    products: [] as Product[],
+    activeCategoryId: null, // Start with no category selected
+    activeCategoryName: '', // 新增字段
   },
 
   onLoad() {
-    this.loadProducts();
+    this.loadCategories();
+  },
+
+  loadCategories() {
+    request({ url: '/shop/categories' }).then(categories => { // 
+      this.setData({
+        categories: categories,
+        activeCategoryId: categories.length > 0 ? categories[0].id : null,
+        activeCategoryName: categories.length > 0 ? categories[0].name : '',
+      });
+      if (this.data.activeCategoryId) {
+        this.loadProducts(); // 
+      }
+    });
   },
 
   onCategoryTap(e: any) {
     const id = e.currentTarget.dataset.id;
-    this.setData({
-      activeCategoryId: id
-    });
+    const name = e.currentTarget.dataset.name;
+    if (id === this.data.activeCategoryId) return;
+    this.setData({ activeCategoryId: id ,activeCategoryName: name});
     this.loadProducts();
   },
   
   loadProducts() {
-    this.setData({
-      products: allProducts[this.data.activeCategoryId]
-    });
+    if (!this.data.activeCategoryId) return;
+    wx.showLoading({ title: '加载中...' });
+    request({ url: `/shop/products?categoryId=${this.data.activeCategoryId}` }).then(products => { // 
+      this.setData({ products: products });
+      wx.hideLoading();
+    }).catch(() => wx.hideLoading());
   }
 });

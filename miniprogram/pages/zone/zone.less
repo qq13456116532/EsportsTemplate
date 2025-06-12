@@ -1,7 +1,6 @@
-/* pages/zone/zone.less */
 .zone-container {
   display: flex;
-  height: calc(100vh - 50px); /* 50px is a guess for nav-bar height */
+  height: calc(100vh - 50px);
 }
 
 .category-sidebar {
@@ -11,6 +10,7 @@
 }
 
 .category-item {
+  position: relative;
   padding: 15px 10px;
   text-align: center;
   font-size: 14px;
@@ -23,11 +23,26 @@
   color: #1296db;
 }
 
+.category-item .indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #1296db;
+}
+
 .product-content {
   flex: 1;
   height: 100%;
   padding: 10px;
   background-color: #ffffff;
+}
+
+.category-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
 .product-card-zone {

@@ -1,0 +1,57 @@
+<!-- pages/login/login.wxml -->
+<navigation-bar title="登录" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="login-container">
+  <view class="login-panel">
+    <view class="title">欢迎登录</view>
+    <!-- 手机号 -->
+    <view class="form-item">
+      <text class="label">手机号:</text>
+      <input class="input" placeholder="请输入手机号码"
+             type="number" maxlength="11"
+             value="{{phone}}" bindinput="onPhoneInput"/>
+    </view>
+
+    <!-- 验证码 + 按钮 -->
+    <view class="form-item">
+      <text class="label">验证码:</text>
+      <input class="input code-input" placeholder="请输入验证码"
+             maxlength="6"
+             value="{{code}}" bindinput="onCodeInput"/>
+      <button class="code-btn" size="mini"
+              disabled="{{codeBtnDisabled}}"
+              bindtap="getCode">
+        {{ codeBtnText }}
+      </button>
+    </view>
+
+    <!-- 协议勾选 -->
+    <view class="agreement">
+      <checkbox checked="{{agree}}" bindtap="toggleAgree"
+                color="#ff4d4f"/>
+      <text> 我已阅读并同意 </text>
+      <navigator url="/pages/agreement/agreement">《用户协议》</navigator>
+      <text>和</text>
+      <navigator url="/pages/privacy/privacy">《隐私政策》</navigator>
+    </view>
+
+    <!-- 登录按钮 -->
+    <button class="btn btn-primary"
+            disabled="{{!canSubmit}}"
+            bindtap="login">
+      登录
+    </button>
+
+    <!-- 手机号快捷登录 -->
+    <button class="btn btn-success"
+            bindtap="loginByPhone">
+      手机号快捷登录
+    </button>
+
+    <!-- 密码登录 -->
+    <button class="btn btn-outline"
+            bindtap="loginByPwd">
+      使用密码登录
+    </button>
+  </view>
+</view>

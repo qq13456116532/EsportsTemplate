@@ -1,22 +1,46 @@
-// pages/shop/shop.ts
+import { request } from '../../utils/request';
+
 Page({
   data: {
-    swiperItems: [
-      { imageUrl: '/assets/images/mock/banner1.png' },
-      { imageUrl: '/assets/images/mock/banner2.png' },
-      { imageUrl: '/assets/images/mock/banner3.png' }
-    ],
-    navItems: [
-      { name: '段位提升', iconUrl: '/assets/images/icons/rank-up.svg' },
-      { name: '大神陪练', iconUrl: '/assets/images/icons/pro-player.svg' },
-      { name: '技能教学', iconUrl: '/assets/images/icons/tutorial.svg' },
-      { name: '娱乐开黑', iconUrl: '/assets/images/icons/fun-game.svg' }
-    ],
-    products: [
-      { id: 1, name: '王者荣耀-荣耀王者陪练', price: '50', sales: 120, views: 1500, imageUrl: '/assets/images/mock/banner1.png' },
-      { id: 2, name: '英雄联盟-钻石到大师', price: '300', sales: 45, views: 2300, imageUrl: '/assets/images/mock/banner2.png' },
-      { id: 3, name: '金铲铲-大师教学局', price: '30', sales: 300, views: 800, imageUrl: '/assets/images/mock/banner3.png' }
-    ]
+    swiperItems: [], // 
+    navItems: [],
+    products: [] // 
   },
-  onLoad() {},
+
+  onLoad() {
+    this.loadShopData();
+  },
+  
+  loadShopData() {
+    wx.showLoading({ title: '加载中...' });
+
+    // Fetch all data in parallel
+    Promise.all([
+      request({ url: '/shop/banners' }), // 
+      request({ url: '/shop/categories' }), // 
+      request({ url: '/shop/products/featured' }) // 
+    ]).then(([banners, categories, products]) => {
+      // The backend doesn't provide icons for categories, so we add them here
+      const navIcons = [
+          '/assets/images/icons/rank-up.svg', 
+          '/assets/images/icons/pro-player.svg', 
+          '/assets/images/icons/tutorial.svg'
+      ];
+      const navItems = categories.map((category: {name: string}, index: number) => ({
+        name: category.name,
+        iconUrl: navIcons[index] || '/assets/images/icons/fun-game.svg' // Provide a default icon
+      }));
+
+      this.setData({
+        swiperItems: banners,
+        navItems: navItems,
+        products: products
+      });
+      wx.hideLoading();
+    }).catch(err => {
+      console.error("Failed to load shop data", err);
+      wx.hideLoading();
+      wx.showToast({ title: '数据加载失败', icon: 'none' });
+    });
+  },
 });

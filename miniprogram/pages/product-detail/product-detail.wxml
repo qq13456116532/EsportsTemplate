@@ -1,17 +1,77 @@
-<navigation-bar title="商单详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
-<view class="detail-container">
-  <image class="product-image" src="/assets/images/mock/banner1.png" mode="aspectFill"></image>
-  <view class="product-info">
-    <view class="price">¥50.00</view>
-    <view class="name">王者荣耀-荣耀王者陪练</view>
-    <view class="details">
-      <text>这里是详细的服务描述，介绍服务内容、时长、以及注意事项等。</text>
+<navigation-bar title="商品详情" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="page-container" wx:if="{{product}}">
+  <image class="product-image" src="{{product.imageUrl}}" mode="widthFix"></image>
+
+  <view class="info-card">
+    <view class="price-section">
+      <view class="price-wrapper">
+        <text class="price-symbol">¥</text>
+        <text class="price-main">{{product.price}}</text>
+      </view>
+      <view class="old-price">¥38888.00</view>
+      <view class="favorite-btn" bindtap="onToggleFavorite">
+        <image 
+          class="favorite-icon" 
+          src="{{isFavorited ? '/assets/images/icons/heart-fill.svg' : '/assets/images/icons/heart_line.svg'}}"
+        />
+      </view>
+    </view>
+    <view class="product-title-section">
+        <view class="product-name">{{product.name}}</view>
+        <view class="product-subname">两万八千八百八十八，非心复苏带回家 (赵哥专属)</view>
     </view>
   </view>
-  <view class="comments-section">
-    <view class="title">用户评价(120)</view>
-    <view class="comment">
-      <text>大神非常给力，下次还来！</text>
+  
+  <view class="shop-card">
+    <image class="shop-logo" src="/assets/images/icons/defaultUser.svg"></image>
+    <view class="shop-info">
+      <text class="shop-name">速凌电竞</text>
+      <text class="shop-fans">1938粉丝</text>
+    </view>
+    <button class="follow-btn">+ 关注</button>
+  </view>
+
+  <view class="detail-card">
+    <view class="card-title">详情</view>
+    <view class="detail-content">
+      <text>{{product.description}}</text>
+      <text>\n\n1.下单之后等待打手接单，打手接单后10分钟之内，打手将根据老板您所提供的游戏昵称或ID,添加您的游戏好友如若15分钟之内没有打手添加您的好友，您可以扫码或直接联系客服。</text>
+      <text>\n\n2.速凌电竞俱乐部，所有订单不卡保底，以最终撤离为准</text>
     </view>
   </view>
+
+  <view class="comment-card">
+  <view class="card-title">用户评论</view>
+  <view class="comment-item" wx:for="{{comments}}" wx:key="id">
+    <view class="comment-header">
+      <image class="avatar" src="{{item.avatar}}" />
+      <view class="user-info">
+        <text class="username">{{item.username}}</text>
+        <text class="timestamp">{{item.timestamp}}</text>
+      </view>
+    </view>
+    <view class="comment-content">{{item.content}}</view>
+  </view>
+  <view wx:if="{{comments.length === 0}}" class="no-comment">
+  <image class="empty-sofa-image" src="/assets/images/icons/empty-sofa.svg" mode="widthFix"></image>
+  <text>暂无更多评论</text>
 </view>
+</view>
+
+
+</view>
+
+<view class="loading-container" wx:else>
+  <text>商品加载中或已下架...</text>
+</view>
+
+<view class="bottom-bar">
+  <view class="shop-entry" bindtap="onBackToShop">
+    <image class="shop-icon" src="/assets/images/icons/shop.svg"></image>
+    <text>店铺</text>
+  </view>
+  <button class="buy-now-btn" bindtap="onBuyNow">立即购买</button>
+</view>
+
+

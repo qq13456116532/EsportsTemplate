@@ -1,5 +1,7 @@
 <navigation-bar title="专区" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+
 <view class="zone-container">
+  <!-- 左侧分类栏 -->
   <scroll-view class="category-sidebar" scroll-y>
     <view
       wx:for="{{categories}}"
@@ -7,13 +9,22 @@
       class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
       bindtap="onCategoryTap"
       data-id="{{item.id}}">
+      <view class="indicator" wx:if="{{activeCategoryId === item.id}}"></view>
       {{item.name}}
     </view>
   </scroll-view>
 
+  <!-- 右侧内容 -->
   <scroll-view class="product-content" scroll-y>
+    <!-- 当前分类名称 -->
+    <view class="category-title">{{activeCategoryName}}</view>
+
     <view class="product-list">
-       <navigator url="/pages/product-detail/product-detail" class="product-card-zone" wx:for="{{products}}" wx:key="id">
+      <navigator 
+        url="/pages/product-detail/product-detail?id={{item.id}}" 
+        class="product-card-zone" 
+        wx:for="{{products}}" 
+        wx:key="id">
         <image class="product-image-zone" src="{{item.imageUrl}}" mode="aspectFill"></image>
         <view class="product-info-zone">
           <view class="product-name-zone">{{item.name}}</view>

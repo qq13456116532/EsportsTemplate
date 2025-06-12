@@ -2,7 +2,7 @@
 <navigation-bar title="个人中心" back="{{false}}" color="black" background="#ffffff"></navigation-bar>
 <view class="mine-container">
   <!-- 顶部头像 + 昵称区（渐变背景） -->
-  <view class="header-gradient">
+  <view class="header-gradient" bindtap="goToLogin">
     <image class="avatar" src="{{userInfo.avatarUrl || '/assets/images/icons/defaultUser.svg'}}"></image>
     <view class="user-info">
       <text class="nickname">{{userInfo.nickName || '立即登录'}}</text>

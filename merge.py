@@ -6,6 +6,9 @@ def save_multiple_folders_to_txt(paths, output_file):
             if os.path.isdir(path):
                 for root, dirs, files in os.walk(path):
                     for filename in files:
+                        # 忽略以 .less 结尾的文件 , 如果要改样式的话这里注释掉
+                        if filename.endswith('.less'):
+                            continue
                         file_path = os.path.join(root, filename)
                         try:
                             with open(file_path, 'r', encoding='utf-8') as f:
@@ -15,6 +18,8 @@ def save_multiple_folders_to_txt(paths, output_file):
                         except Exception as e:
                             out.write(f'{file_path}：\n【无法读取文件：{e}】\n\n')
             elif os.path.isfile(path):
+                if path.endswith('.less'):
+                    continue
                 try:
                     with open(path, 'r', encoding='utf-8') as f:
                         content = f.read()
@@ -22,9 +27,9 @@ def save_multiple_folders_to_txt(paths, output_file):
                 except Exception as e:
                     out.write(f'{path}：\n【无法读取文件：{e}】\n\n')
 
-
 # 示例用法：指定多个文件夹
-folders = ['miniprogram/components', 'miniprogram/pages','miniprogram/utils']
+# folders = ['miniprogram/components', 'miniprogram/pages', 'miniprogram/utils', 'esports/src']
+folders = ['miniprogram/components', 'miniprogram/pages', 'miniprogram/utils']
 output_file = 'all_contents.txt'
 
 save_multiple_folders_to_txt(folders, output_file)

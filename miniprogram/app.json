@@ -6,7 +6,8 @@
     "pages/zone/zone",
     "pages/mine/mine",
     "pages/product-detail/product-detail",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/login/login"
   ],
   "entryPagePath": "pages/shop/shop",
   "tabBar": {

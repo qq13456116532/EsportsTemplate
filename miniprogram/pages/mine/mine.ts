@@ -7,4 +7,9 @@ Page({
     }
   },
   onLoad() {},
+  goToLogin() {
+    wx.navigateTo({
+      url: '/pages/login/login',
+    });
+  },
 });
