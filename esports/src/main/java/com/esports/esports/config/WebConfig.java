@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     private String uploadDir;
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(@SuppressWarnings("null") ResourceHandlerRegistry registry) {
         // 对外暴露 /static/** → 本地文件夹
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("file:" + uploadDir + "/");
