@@ -40,6 +40,7 @@ Page({
     request({ url: `/shop/products?categoryId=${this.data.activeCategoryId}` }).then(products => { // 
       this.setData({ products: products });
       wx.hideLoading();
-    }).catch(() => wx.hideLoading());
+    }).catch()
+    .finally(() => wx.hideLoading());
   }
 });

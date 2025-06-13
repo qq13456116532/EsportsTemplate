@@ -1,4 +1,4 @@
-import { ensureLogin, updateUserInfo } from "../../utils/util";
+import { ensureLogin, updateUserInfo, uploadFile } from "../../utils/util";
 // pages/mine/mine.ts
 Page({
   data: {
@@ -22,20 +22,22 @@ Page({
    * 响应用户选择头像
    */
   async onChooseAvatar(e: any) {
-    const { avatarUrl } = e.detail;
-    if (!avatarUrl || !this.data.userInfo) return;
+    const temp = e.detail.avatarUrl;
+    console.log(temp)
+    if (!temp) return;
 
     wx.showLoading({ title: '上传中...' });
     try {
-      // ① 调后端保存
-      const user = await updateUserInfo({ avatarUrl });
+      // ① 先传文件
+      const onlineUrl = await uploadFile(temp);
 
-      // ② 更新本地 & 页面
+      // ② 再写用户资料
+      const user = await updateUserInfo({ avatarUrl: onlineUrl });
+
       wx.setStorageSync('userInfo', user);
       this.setData({ userInfo: user });
-
       wx.showToast({ title: '头像已更新', icon: 'success' });
-    } catch (err) {
+    } catch {
       wx.showToast({ title: '上传失败', icon: 'none' });
     } finally {
       wx.hideLoading();

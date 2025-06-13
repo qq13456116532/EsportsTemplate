@@ -37,3 +37,20 @@ export const updateUserInfo = (payload: Partial<{ nickName: string; avatarUrl: s
     method: 'PUT',
     data: payload,   // { nickName?, avatarUrl? }
   });
+
+
+
+export const uploadFile = (tempPath: string): Promise<string> =>
+  new Promise((resolve, reject) => {
+    wx.uploadFile({
+      url: 'http://127.0.0.1:8080/api/upload/avatar', // 你的后端地址
+      filePath: tempPath,
+      name: 'file',
+      success(res) {
+        const data = JSON.parse(res.data || '{}');
+        if (data.url) resolve(data.url);
+        else reject('no url');
+      },
+      fail: reject,
+    });
+  });

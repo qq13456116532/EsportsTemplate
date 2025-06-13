@@ -538,7 +538,7 @@ miniprogram/pages\mine\mine.json：
 }】
 
 miniprogram/pages\mine\mine.ts：
-【import { ensureLogin, updateUserInfo } from "../../utils/util";
+【import { ensureLogin, updateUserInfo, uploadFile } from "../../utils/util";
 // pages/mine/mine.ts
 Page({
   data: {
@@ -562,20 +562,22 @@ Page({
    * 响应用户选择头像
    */
   async onChooseAvatar(e: any) {
-    const { avatarUrl } = e.detail;
-    if (!avatarUrl || !this.data.userInfo) return;
+    const temp = e.detail.avatarUrl;
+    console.log(temp)
+    if (!temp) return;
 
     wx.showLoading({ title: '上传中...' });
     try {
-      // ① 调后端保存
-      const user = await updateUserInfo({ avatarUrl });
+      // ① 先传文件
+      const onlineUrl = await uploadFile(temp);
 
-      // ② 更新本地 & 页面
+      // ② 再写用户资料
+      const user = await updateUserInfo({ avatarUrl: onlineUrl });
+
       wx.setStorageSync('userInfo', user);
       this.setData({ userInfo: user });
-
       wx.showToast({ title: '头像已更新', icon: 'success' });
-    } catch (err) {
+    } catch {
       wx.showToast({ title: '上传失败', icon: 'none' });
     } finally {
       wx.hideLoading();
@@ -585,8 +587,9 @@ Page({
   /**
    * 响应用户修改昵称
    */
-  async onNicknameBlur(e: any) {
+  async onNicknameChange(e: any) {
     const nickName = (e.detail.value || '').trim();
+    console.log('从输入框获取到的新昵称是：', nickName); 
     if (!nickName) {
       wx.showToast({ title: '昵称不能为空', icon: 'none' });
       return;
@@ -627,7 +630,7 @@ miniprogram/pages\mine\mine.wxml：
           type="nickname" 
           class="nickname-input" 
           value="{{userInfo.nickName}}" 
-          bind:blur="onNicknameBlur" 
+          bind:change="onNicknameChange" 
           placeholder="请填写昵称"
         />
         <text wx:if="{{userInfo.nickName}}" class="user-id">ID: 123456</text>
@@ -1082,6 +1085,7 @@ type RequestOptions = {
 export const request = (options: RequestOptions): Promise<any> => {
   const token = wx.getStorageSync('token');               // ← 取本地 token
   const headers = {
+    'content-type': 'application/json',
     ...(options.header || {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {})   // 自动带 token，不用逐个手动塞 header
   };
@@ -1168,7 +1172,25 @@ export const updateUserInfo = (payload: Partial<{ nickName: string; avatarUrl: s
     url: '/users/me',
     method: 'PUT',
     data: payload,   // { nickName?, avatarUrl? }
-  });】
+  });
+
+
+
+export const uploadFile = (tempPath: string): Promise<string> =>
+  new Promise((resolve, reject) => {
+    wx.uploadFile({
+      url: 'http://127.0.0.1:8080/api/upload/avatar', // 你的后端地址
+      filePath: tempPath,
+      name: 'file',
+      success(res) {
+        const data = JSON.parse(res.data || '{}');
+        if (data.url) resolve(data.url);
+        else reject('no url');
+      },
+      fail: reject,
+    });
+  });
+】
 
 esports/src\main\java\com\esports\esports\EsportsApplication.java：
 【package com.esports.esports;
@@ -1344,6 +1366,30 @@ public class RedisConfig {
     @Bean
     public StatefulRedisConnection<String, String> redisConnection(RedisClient client) {
         return client.connect();
+    }
+}
+】
+
+esports/src\main\java\com\esports\esports\config\WebConfig.java：
+【package com.esports.esports.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Value("${app.upload-dir}")
+    private String uploadDir;
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 对外暴露 /static/** → 本地文件夹
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("file:" + uploadDir + "/");
     }
 }
 】
@@ -1533,10 +1579,61 @@ public class ShopController {
     }
 }】
 
+esports/src\main\java\com\esports\esports\controller\UploadController.java：
+【// src/main/java/com/esports/esports/controller/UploadController.java
+package com.esports.esports.controller;
+
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/upload")
+@RequiredArgsConstructor
+public class UploadController {
+
+    @Value("${app.upload-dir:uploads}")     // 默认 ./uploads
+    private String uploadDir;
+
+    /** POST /upload/avatar  */
+    @PostMapping("/avatar")
+    public ResponseEntity<?> uploadAvatar(@RequestParam("file") MultipartFile file,
+                                          HttpServletRequest req) throws Exception {
+
+        if (file.isEmpty()) return ResponseEntity.badRequest().body("file is empty");
+
+        // ① 生成文件名并保存
+        String ext  = FilenameUtils.getExtension(file.getOriginalFilename());
+        String name = UUID.randomUUID() + "." + ext;
+        Path full   = Paths.get(uploadDir, name);
+        Files.createDirectories(full.getParent());
+        file.transferTo(full);
+
+        // ② 拼出可访问 URL（这里假设用静态资源映射 /static/** → uploads/**）
+        String base = req.getScheme() + "://" + req.getServerName() + ":" +
+                      req.getServerPort() + req.getContextPath();   // http://host:port/api
+        String url  = base + "/static/" + name;
+
+        return ResponseEntity.ok(Map.of("url", url));
+    }
+}
+】
+
 esports/src\main\java\com\esports\esports\controller\UserController.java：
 【package com.esports.esports.controller;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -2258,6 +2355,9 @@ redis.host=redis-13464.c246.us-east-1-4.ec2.redns.redis-cloud.com
 redis.port=13464
 redis.username=default
 redis.password=K8PuE69Ebx4hTgDy3wfOsRRsIjW6cMTd
+
+# 图片的保存地址
+app.upload-dir=D:/esports_uploads/
 】
 
 esports/src\test\java\com\esports\esports\EsportsApplicationTests.java：

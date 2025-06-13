@@ -25,9 +25,9 @@ Page({
         });
         this.checkFavoriteStatus(product.id);
         this.loadComments(product.id);
-        wx.hideLoading();
       })
-      .catch(() => wx.hideLoading());
+      .catch()
+      .finally(()=>wx.hideLoading());
   },
   loadComments(productId: number) {
     request({ url: `/comments`, data: { productId } })

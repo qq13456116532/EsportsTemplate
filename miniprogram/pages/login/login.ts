@@ -92,16 +92,15 @@ Page({
           })
           .catch(() => wx.showToast({ title: '登录失败', icon: 'none' }))
           .finally(() => {
-            wx.hideLoading();
             this.setData({ canSubmit: true });
           });
       },
       fail: () => {
-        wx.hideLoading();
         wx.showToast({ title: '微信登录失败', icon: 'none' });
         this.setData({ canSubmit: true });
       },
     });
+    wx.hideLoading();
   },
 
 
