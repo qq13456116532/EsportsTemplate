@@ -70,9 +70,21 @@ Page({
     }
   },
 
-  goToPendingPay() { if (!ensureLogin()) return; /* 跳转 */ },
-  goToOngoing()    { if (!ensureLogin()) return; /* 跳转 */ },
-  goToPendingComment() { if (!ensureLogin()) return; /* 跳转 */ },
-  goToAllOrders()  { if (!ensureLogin()) return; /* 跳转 */ },
-  contactService() { if (!ensureLogin()) return; /* … */ },
+  goToPendingPay() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order?status=PENDING_PAYMENT' });
+  },
+  goToOngoing() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order?status=ONGOING' });
+  },
+  goToPendingComment() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order?status=PENDING_COMMENT' });
+  },
+  goToAllOrders() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order' });   // 全部
+  },
+
 });

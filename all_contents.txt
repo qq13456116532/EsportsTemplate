@@ -400,16 +400,15 @@ Page({
           })
           .catch(() => wx.showToast({ title: '登录失败', icon: 'none' }))
           .finally(() => {
-            wx.hideLoading();
             this.setData({ canSubmit: true });
           });
       },
       fail: () => {
-        wx.hideLoading();
         wx.showToast({ title: '微信登录失败', icon: 'none' });
         this.setData({ canSubmit: true });
       },
     });
+    wx.hideLoading();
   },
 
 
@@ -610,11 +609,23 @@ Page({
     }
   },
 
-  goToPendingPay() { if (!ensureLogin()) return; /* 跳转 */ },
-  goToOngoing()    { if (!ensureLogin()) return; /* 跳转 */ },
-  goToPendingComment() { if (!ensureLogin()) return; /* 跳转 */ },
-  goToAllOrders()  { if (!ensureLogin()) return; /* 跳转 */ },
-  contactService() { if (!ensureLogin()) return; /* … */ },
+  goToPendingPay() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order?status=PENDING_PAYMENT' });
+  },
+  goToOngoing() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order?status=ONGOING' });
+  },
+  goToPendingComment() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order?status=PENDING_COMMENT' });
+  },
+  goToAllOrders() {
+    if (!ensureLogin()) return;
+    wx.navigateTo({ url: '/pages/order/order' });   // 全部
+  },
+
 });】
 
 miniprogram/pages\mine\mine.wxml：
@@ -649,7 +660,7 @@ miniprogram/pages\mine\mine.wxml：
 
   <view class="order-card">
     <view class="order-header">
-      <text class="order-title">陪玩订单</text>
+      <text class="order-title">订单</text>
       <navigator url="/pages/order/order" class="order-all">全部 </navigator>
     </view>
     <view class="order-status">
@@ -677,16 +688,297 @@ miniprogram/pages\mine\mine.wxml：
       <text>关于我们</text>
       <text class="arrow"></text>
     </navigator>
-    <view class="menu-item" bindtap="contactService">
-      <text>我的客服</text>
-      <text class="arrow"></text>
-    </view>
     <view class="menu-item" bindtap="openSetting">
       <text>设置</text>
       <text class="arrow"></text>
     </view>
   </view>
 </view>】
+
+miniprogram/pages\order\order.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  },
+  "enablePullDownRefresh": true
+}
+】
+
+miniprogram/pages\order\order.ts：
+【// pages/order/order.ts
+import { request } from '../../utils/request';
+import { ensureLogin } from '../../utils/util';
+import { formatDate } from '../../utils/util';
+
+Page({
+  data: {
+    tabs: [
+      { key: '',                  label: '全部'     },
+      { key: 'PENDING_PAYMENT',   label: '待付款'   },
+      { key: 'ONGOING',           label: '进行中'   },
+      { key: 'PENDING_COMMENT',   label: '待评价'   }
+    ],
+    activeTab: '',       // '' = 全部
+    orders: [] as PlayerOrder[],
+    loading: false
+  },
+
+  /** 接收 mine 页带过来的 ?status=... */
+  onLoad(options: { status?: string }) {
+    this.setData({ activeTab: options.status || '' });
+    this.fetchOrders();
+  },
+  /** 根据订单状态返回对应 badge class */
+  statusClass(status: string) {
+    const map: Record<string,string> = {
+      PENDING_PAYMENT: 'badge-pay',
+      ONGOING:         'badge-ing',
+      PENDING_COMMENT: 'badge-comment',
+      REFUNDED:        'badge-refund'
+    };
+    return map[status] || 'badge';
+  },
+
+  /** 去逛逛（空状态按钮） */
+  goShop() {
+    wx.switchTab({ url: '/pages/shop/shop' });
+  },
+  /** 顶部标签点击 */
+  onTabTap(e: WechatMiniprogram.BaseEvent) {
+    const key = (e.currentTarget.dataset.key || '') as string;
+    if (key === this.data.activeTab) return;
+    this.setData({ activeTab: key });
+    this.fetchOrders();
+  },
+
+  /** 下拉刷新 */
+  onPullDownRefresh() {
+    this.fetchOrders().finally(() => wx.stopPullDownRefresh());
+  },
+
+  /** 请求订单列表 */
+  async fetchOrders() {
+    if (!ensureLogin()) return;
+    this.setData({ loading: true, orders: [] });
+
+    const params = this.data.activeTab ? { status: this.data.activeTab } : {};
+    try {
+      const orders = await request({ url: '/orders', data: params });
+      // this.setData({ orders });
+      this.setData({
+        orders: orders.map((o: PlayerOrder) => ({
+          ...o,
+          createdAt: formatDate(o.createdAt)   // 新增字段
+        }))
+      });
+    } catch {
+      wx.showToast({ title: '加载失败', icon: 'none' });
+    } finally {
+      this.setData({ loading: false });
+    }
+  },
+
+  /** 辅助：把后端枚举翻成人类可读 */
+  translateStatus(status: string) {
+    const map: Record<string,string> = {
+      PENDING_PAYMENT: '待付款',
+      ONGOING:         '进行中',
+      PENDING_COMMENT: '待评价',
+      REFUNDED:        '已退款'
+    };
+    return map[status] || status;
+  }
+});
+
+】
+
+miniprogram/pages\order\order.wxml：
+【<!-- pages/order/order.wxml -->
+<navigation-bar title="我的订单" back="{{true}}" color="white"
+                background="linear-gradient(90deg,#ff585d 0%,#ff7c29 100%)">
+</navigation-bar>
+
+<view class="order-page">
+  <!-- Tabs -->
+  <view class="tabs shadow">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      class="tab {{activeTab === item.key ? 'active' : ''}}"
+      bindtap="onTabTap">
+      {{item.label}}
+      <view wx:if="{{activeTab === item.key}}" class="underline"></view>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <scroll-view class="list" scroll-y>
+    <!-- 骨架 -->
+    <block wx:if="{{loading}}">
+      <block wx:for="{{[1,2,3,4]}}" wx:key="*this">
+        <view class="card skeleton"></view>
+      </block>
+    </block>
+
+    <!-- 订单卡片 -->
+    <block wx:for="{{orders}}" wx:key="id">
+      <view class="card" hover-class="card-hover">
+        <image class="thumb" src="{{item.product.imageUrl}}" mode="aspectFill"/>
+
+        <view class="content">
+          <view class="row between name">
+            <text>{{item.product.name}}</text>
+            <text class="badge {{statusClass(item.status)}}">
+              {{translateStatus(item.status)}}
+            </text>
+          </view>
+
+          <view class="row between small">
+            <text>下单时间：{{item.createdAt}}</text>
+            <text>数量：{{item.quantity || 1}}</text>
+          </view>
+
+          <view class="row between price">
+            <text>合计</text>
+            <text class="price-text">¥{{item.product.price}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view wx:if="{{!orders.length && !loading}}" class="empty">
+      <image src="/assets/images/icons/empty-order.png" mode="widthFix"/>
+      <text class="tip">暂无订单哦</text>
+      <button class="go-shop" bindtap="goShop">去逛逛</button>
+    </view>
+  </scroll-view>
+</view>
+】
+
+miniprogram/pages\order-confirm\order-confirm.json：
+【{
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar"
+  }
+}
+】
+
+miniprogram/pages\order-confirm\order-confirm.ts：
+【import { request } from '../../utils/request';
+import { ensureLogin } from '../../utils/util';
+
+Page({
+  data: {
+    product: null as Product | null,
+    qty: 1,
+    remark: '',
+    submitting: false,
+    total: '0.00'
+  },
+
+  onLoad(options: { id?: string }) {
+    if (options.id) this.loadProduct(options.id);
+  },
+
+  /* ---------- 数据加载 ---------- */
+  loadProduct(id: string) {
+    wx.showLoading({ title: '加载中...' });
+    request({ url: `/shop/products/${id}` })
+      .then(product => {
+        this.setData({ product });
+        this.recalc();
+      })
+      .finally(() => wx.hideLoading());
+  },
+
+  /* ---------- 数量加减 ---------- */
+  inc() { this.setQty(this.data.qty + 1); },
+  dec() { if (this.data.qty > 1) this.setQty(this.data.qty - 1); },
+  setQty(qty: number) { this.setData({ qty }); this.recalc(); },
+
+  /* ---------- 备注 ---------- */
+  onRemark(e: WechatMiniprogram.Input) {
+    this.setData({ remark: e.detail.value });
+  },
+
+  /* ---------- 计算总价 ---------- */
+  recalc() {
+    if (!this.data.product) return;
+    const totalNum = (Number(this.data.product.price) * this.data.qty).toFixed(2);
+    this.setData({ total: totalNum });
+  },
+
+  /* ---------- 提交订单 ---------- */
+  async submitOrder() {
+    if (!ensureLogin()) return;
+    if (this.data.submitting) return;
+    this.setData({ submitting: true });
+
+    try {
+      await request({
+        url: '/orders',          // 后端接口，见下面新增说明
+        method: 'POST',
+        data: {
+          productId: this.data.product!.id,
+          quantity: this.data.qty,
+          remark: this.data.remark
+        }
+      });
+
+      wx.showToast({ title: '下单成功', icon: 'success' });
+      // 简易跳转：支付流程接入前先回到订单列表/个人中心
+      setTimeout(() => wx.navigateBack({ delta: 1 }), 1500);
+    } catch {
+      wx.showToast({ title: '下单失败', icon: 'none' });
+    } finally {
+      this.setData({ submitting: false });
+    }
+  }
+});
+】
+
+miniprogram/pages\order-confirm\order-confirm.wxml：
+【<navigation-bar title="确认订单" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="page">
+  <!-- 商品信息 -->
+  <view class="card product">
+    <image class="thumb" src="{{product.imageUrl}}" mode="aspectFill"/>
+    <view class="info">
+      <text class="name">{{product.name}}</text>
+      <text class="price">¥{{product.price}}</text>
+    </view>
+  </view>
+
+  <!-- 购买数量 -->
+  <view class="card qty">
+    <text class="label">购买数量</text>
+    <view class="stepper">
+      <view class="btn" bindtap="dec">－</view>
+      <text class="num">{{qty}}</text>
+      <view class="btn" bindtap="inc">＋</view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card remark">
+    <text class="label">备注</text>
+    <textarea
+      placeholder="给打手留言（选填）"
+      maxlength="200"
+      value="{{remark}}"
+      bindinput="onRemark"/>
+  </view>
+</view>
+
+<!-- 底部结算栏 -->
+<view class="bottom">
+  <view class="total">合计：<text class="amount">¥{{total}}</text></view>
+  <button class="submit-btn" bindtap="submitOrder" loading="{{submitting}}">提交并支付</button>
+</view>
+】
 
 miniprogram/pages\product-detail\product-detail.json：
 【{ "usingComponents": { "navigation-bar": "/components/navigation-bar/navigation-bar" } }】
@@ -719,9 +1011,9 @@ Page({
         });
         this.checkFavoriteStatus(product.id);
         this.loadComments(product.id);
-        wx.hideLoading();
       })
-      .catch(() => wx.hideLoading());
+      .catch()
+      .finally(()=>wx.hideLoading());
   },
   loadComments(productId: number) {
     request({ url: `/comments`, data: { productId } })
@@ -880,15 +1172,48 @@ miniprogram/pages\shop\shop.ts：
 
 Page({
   data: {
-    swiperItems: [], // 
-    navItems: [],
-    products: [] // 
+    swiperItems: [],   // 轮播
+    navItems:   [],    // 分类导航
+    products:   [],    // 列表
+    searchQuery: '',   
+    listTitle: '精选推荐',
+    loading: false,     // ← 可配合 skeleton / loading 动画
   },
 
+  /* 页面加载 */
   onLoad() {
-    this.loadShopData();
+    this.loadShopData();        // 首屏还是取精选
   },
-  
+
+  /* ========= 搜索 ========= */
+  onSearchInput(e: WechatMiniprogram.Input) {
+    const val = e.detail.value;
+    this.setData({ searchQuery: val });
+    if (!val.trim()) this.loadFeatured();   // 清空即恢复精选
+  },
+
+  onSearchConfirm() {
+    const q = this.data.searchQuery.trim();
+    if (!q) return;
+
+    this.setData({ loading: true, listTitle: '搜索结果' });
+    request({ url: '/shop/products', data: { searchQuery: q } })
+      .then(products => this.setData({ products }))
+      .catch(() => wx.showToast({ title: '搜索失败', icon: 'none' }))
+      .finally(() => this.setData({ loading: false }));
+  },
+
+  onCancelSearch() {
+    this.setData({ searchQuery: '' });
+    this.loadFeatured();
+  },
+  loadFeatured() {
+    this.setData({ loading: true, listTitle: '精选推荐' });
+    request({ url: '/shop/products/featured' })
+      .then(products => this.setData({ products }))
+      .finally(() => this.setData({ loading: false }));
+  },
+
   loadShopData() {
     wx.showLoading({ title: '加载中...' });
 
@@ -927,7 +1252,24 @@ miniprogram/pages\shop\shop.wxml：
 【<navigation-bar title="店铺" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 <view class="shop-container">
   <view class="search-bar">
-    <input class="search-input" placeholder="搜索大神或服务" />
+    <input
+      class="search-input"
+      placeholder="搜索大神或服务"
+      value="{{searchQuery}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearchConfirm"   
+      confirm-type="search"
+    />
+    <image
+      class="search-icon"
+      src="/assets/images/icons/search.svg"
+      bindtap="onSearchConfirm"
+    />
+    <text
+      wx:if="{{searchQuery}}"
+      class="cancel-text"
+      bindtap="onCancelSearch"
+    >取消</text>
   </view>
 
   <swiper class="promo-swiper" indicator-dots autoplay circular>
@@ -944,7 +1286,7 @@ miniprogram/pages\shop\shop.wxml：
   </view>
 
   <view class="recommend-section">
-    <view class="section-title">精选推荐</view>
+    <view class="title-div"><text class="section-title">{{listTitle}}</text></view>
     <view class="product-list">
       <navigator url="/pages/product-detail/product-detail?id={{item.id}}" class="product-card" wx:for="{{products}}" wx:key="id">
         <image class="product-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
@@ -1010,7 +1352,8 @@ Page({
     request({ url: `/shop/products?categoryId=${this.data.activeCategoryId}` }).then(products => { // 
       this.setData({ products: products });
       wx.hideLoading();
-    }).catch(() => wx.hideLoading());
+    }).catch()
+    .finally(() => wx.hideLoading());
   }
 });】
 
@@ -1069,6 +1412,20 @@ type Comment = {
   rating: number;
   timestamp: string;  // ISO 日期或已格式化
 };
+
+// ✅ 临时声明，确认字段后再完善
+interface PlayerOrder {
+  id: string;
+  status: 'PENDING_PAYMENT' | 'ONGOING' | 'PENDING_COMMENT' | 'REFUNDED';
+  product: {
+    name: string;
+    price: number;
+    imageUrl: string;
+  };
+  createdAt: Date
+  // 视情况把后端返回的其他字段也补上
+}
+
 】
 
 miniprogram/utils\request.ts：
@@ -1175,6 +1532,18 @@ export const updateUserInfo = (payload: Partial<{ nickName: string; avatarUrl: s
   });
 
 
+/** 把 ISO 字符串转成 'YYYY-MM-DD HH:mm' */
+function formatDate(iso: string) {
+  const d = new Date(iso);
+  const pad = (n: number) => (n < 10 ? '0' + n : n);
+  return (
+    d.getFullYear() +
+    '-' + pad(d.getMonth() + 1) +
+    '-' + pad(d.getDate()) +
+    ' ' + pad(d.getHours()) +
+    ':' + pad(d.getMinutes())
+  );
+}
 
 export const uploadFile = (tempPath: string): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -1386,7 +1755,7 @@ public class WebConfig implements WebMvcConfigurer {
     private String uploadDir;
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(@SuppressWarnings("null") ResourceHandlerRegistry registry) {
         // 对外暴露 /static/** → 本地文件夹
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("file:" + uploadDir + "/");
@@ -1519,6 +1888,15 @@ public class OrderController {
         }
         return ResponseEntity.ok(orderService.getOrdersForUser(uid));
     }
+    @PostMapping
+    public ResponseEntity<PlayerOrder> create(@RequestHeader("Authorization") String authHeader,
+                                            @RequestBody CreateReq req) {
+        Long uid = authService.currentUserId(authHeader);
+        return ResponseEntity.ok(orderService.createOrder(uid, req.productId(), req.quantity(), req.remark()));
+    }
+    
+    public record CreateReq(Long productId, Integer quantity, String remark) {}
+
 }
 】
 
@@ -1588,11 +1966,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -2162,6 +2538,9 @@ esports/src\main\java\com\esports\esports\service\OrderService.java：
 import com.esports.esports.model.PlayerOrder;
 import com.esports.esports.model.OrderStatus;
 import com.esports.esports.repository.PlayerOrderRepository;
+import com.esports.esports.repository.ProductRepository;
+import com.esports.esports.repository.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -2171,7 +2550,10 @@ import java.util.List;
 public class OrderService {
     
     private final PlayerOrderRepository orderRepository;
+    
+    private final UserRepository userRepository;
 
+    private final ProductRepository productRepository;
     public List<PlayerOrder> getOrdersForUser(Long userId) {
         return orderRepository.findByUserId(userId);
     }
@@ -2179,6 +2561,15 @@ public class OrderService {
     public List<PlayerOrder> getOrdersForUserByStatus(Long userId, OrderStatus status) {
         return orderRepository.findByUserIdAndStatus(userId, status);
     }
+    public PlayerOrder createOrder(Long uid, Long pid, int qty, String remark) {
+        PlayerOrder po = new PlayerOrder();
+        po.setUser(userRepository.findById(uid).orElseThrow());
+        po.setProduct(productRepository.findById(pid).orElseThrow());
+        po.setStatus(OrderStatus.PENDING_PAYMENT);
+        // 如需数量、备注可在实体上加字段
+        return orderRepository.save(po);
+    }
+
 }】
 
 esports/src\main\java\com\esports\esports\service\ShopService.java：

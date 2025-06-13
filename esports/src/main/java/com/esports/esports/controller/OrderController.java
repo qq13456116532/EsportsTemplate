@@ -32,4 +32,13 @@ public class OrderController {
         }
         return ResponseEntity.ok(orderService.getOrdersForUser(uid));
     }
+    @PostMapping
+    public ResponseEntity<PlayerOrder> create(@RequestHeader("Authorization") String authHeader,
+                                            @RequestBody CreateReq req) {
+        Long uid = authService.currentUserId(authHeader);
+        return ResponseEntity.ok(orderService.createOrder(uid, req.productId(), req.quantity(), req.remark()));
+    }
+    
+    public record CreateReq(Long productId, Integer quantity, String remark) {}
+
 }

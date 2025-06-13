@@ -39,6 +39,18 @@ export const updateUserInfo = (payload: Partial<{ nickName: string; avatarUrl: s
   });
 
 
+/** 把 ISO 字符串转成 'YYYY-MM-DD HH:mm' */
+export function formatDate(iso: string) {
+  const d = new Date(iso);
+  const pad = (n: number) => (n < 10 ? '0' + n : n);
+  return (
+    d.getFullYear() +
+    '-' + pad(d.getMonth() + 1) +
+    '-' + pad(d.getDate()) +
+    ' ' + pad(d.getHours()) +
+    ':' + pad(d.getMinutes())
+  );
+}
 
 export const uploadFile = (tempPath: string): Promise<string> =>
   new Promise((resolve, reject) => {

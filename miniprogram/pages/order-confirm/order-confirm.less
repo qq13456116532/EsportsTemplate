@@ -1,0 +1,90 @@
+/* ---------- 页面整体 ---------- */
+.page{
+  padding:24rpx 32rpx 120rpx;
+  background:#f7f8fa;
+  min-height:100vh;          /* 防止内容过少时底栏与页面分离 */
+  box-sizing:border-box;
+}
+
+/* ---------- 通用卡片 ---------- */
+.card{
+  background:#fff;
+  border-radius:16rpx;
+  padding:28rpx;
+  margin-bottom:24rpx;
+  box-shadow:0 4rpx 16rpx rgba(0,0,0,.04);
+}
+
+/* ---------- 商品信息 ---------- */
+.product{display:flex;}
+.thumb{
+  width:200rpx; height:200rpx;
+  border-radius:12rpx;
+  margin-right:24rpx;
+  object-fit:cover;
+  flex-shrink:0;
+}
+.info{flex:1; display:flex; flex-direction:column; justify-content:space-between;}
+.info .name{font-size:32rpx; font-weight:600; color:#111; line-height:1.4;}
+.info .price{font-size:36rpx; font-weight:700; color:#e64340;}
+
+/* ---------- 数量选择 ---------- */
+.qty{display:flex; align-items:center; justify-content:space-between;}
+.label{font-size:30rpx; color:#333;}
+.stepper{display:flex; align-items:center;}
+.btn{
+  width:72rpx; height:72rpx;
+  line-height:72rpx; text-align:center;
+  border:2rpx solid #e5e5e5; border-radius:8rpx;
+  font-size:40rpx; font-weight:600;
+}
+.num{
+  width:100rpx; text-align:center;
+  font-size:32rpx; margin:0 16rpx;
+}
+
+/* ---------- 备注区域 ---------- */
+.remark textarea{
+  width:100%;
+  min-height:160rpx;
+  padding:16rpx;
+  border:2rpx solid #e5e5e5;
+  border-radius:12rpx;
+  font-size:28rpx; color:#333;
+  box-sizing:border-box;
+}
+
+/* ---------- 底部结算栏 ---------- */
+.bottom{
+  position:fixed; left:0; right:0; bottom:0;
+  height:120rpx; padding:0 32rpx;
+  background:#fff;
+  display:flex;               /* 横向主轴 */
+  align-items:center;          /* 纵向居中 */
+  justify-content:space-between; /* 左右自动分散 */
+  box-shadow:0 -4rpx 12rpx rgba(0,0,0,.05);
+  z-index:10;
+}
+
+/* 合计区域留在左侧，无需改动 */
+.total{font-size:30rpx; color:#222;}
+.amount{font-size:40rpx; font-weight:700; color:#e64340;}
+
+/* ---------- 右侧主按钮 ---------- */
+.submit-btn{
+  /* 让按钮自己顶到最右，而非靠 total 来撑开 */
+  margin-left:auto;
+
+  /* 尺寸与圆角 */
+  width:240rpx; height:80rpx;
+  border:none; border-radius:40rpx;
+  background:#e64340; color:#fff;
+
+  /* 用 flex 而不是 line-height，解决文字或 loading 圈偏位 */
+  display:flex; justify-content:center; align-items:center;
+
+  font-size:30rpx; font-weight:600;
+  box-sizing:border-box;
+}
+
+.submit-btn[disabled]{opacity:.6;}

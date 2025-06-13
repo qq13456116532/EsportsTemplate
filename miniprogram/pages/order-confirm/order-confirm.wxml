@@ -1,0 +1,38 @@
+<navigation-bar title="确认订单" back="{{true}}" color="black" background="#FFF"></navigation-bar>
+
+<view class="page">
+  <!-- 商品信息 -->
+  <view class="card product">
+    <image class="thumb" src="{{product.imageUrl}}" mode="aspectFill"/>
+    <view class="info">
+      <text class="name">{{product.name}}</text>
+      <text class="price">¥{{product.price}}</text>
+    </view>
+  </view>
+
+  <!-- 购买数量 -->
+  <view class="card qty">
+    <text class="label">购买数量</text>
+    <view class="stepper">
+      <view class="btn" bindtap="dec">－</view>
+      <text class="num">{{qty}}</text>
+      <view class="btn" bindtap="inc">＋</view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="card remark">
+    <text class="label">备注</text>
+    <textarea
+      placeholder="给打手留言（选填）"
+      maxlength="200"
+      value="{{remark}}"
+      bindinput="onRemark"/>
+  </view>
+</view>
+
+<!-- 底部结算栏 -->
+<view class="bottom">
+  <view class="total">合计：<text class="amount">¥{{total}}</text></view>
+  <button class="submit-btn" bindtap="submitOrder" loading="{{submitting}}">提交并支付</button>
+</view>

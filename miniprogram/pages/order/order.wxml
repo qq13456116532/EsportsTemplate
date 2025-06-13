@@ -1,0 +1,62 @@
+<!-- pages/order/order.wxml -->
+<navigation-bar title="我的订单" back="{{true}}" color="white"
+                background="linear-gradient(90deg,#ff585d 0%,#ff7c29 100%)">
+</navigation-bar>
+
+<view class="order-page">
+  <!-- Tabs -->
+  <view class="tabs shadow">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      data-key="{{item.key}}"
+      class="tab {{activeTab === item.key ? 'active' : ''}}"
+      bindtap="onTabTap">
+      {{item.label}}
+      <view wx:if="{{activeTab === item.key}}" class="underline"></view>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <scroll-view class="list" scroll-y>
+    <!-- 骨架 -->
+    <block wx:if="{{loading}}">
+      <block wx:for="{{[1,2,3,4]}}" wx:key="*this">
+        <view class="card skeleton"></view>
+      </block>
+    </block>
+
+    <!-- 订单卡片 -->
+    <block wx:for="{{orders}}" wx:key="id">
+      <view class="card" hover-class="card-hover">
+        <image class="thumb" src="{{item.product.imageUrl}}" mode="aspectFill"/>
+
+        <view class="content">
+          <view class="row between name">
+            <text>{{item.product.name}}</text>
+            <text class="badge {{statusClass(item.status)}}">
+              {{translateStatus(item.status)}}
+            </text>
+          </view>
+
+          <view class="row between small">
+            <text>下单时间：{{item.createdAt}}</text>
+            <text style="padding-right:10px">数量：{{item.quantity || 1}}</text>
+          </view>
+
+          <view class="row between price">
+            <text>合计</text>
+            <text class="price-text">¥{{item.product.price}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 -->
+    <view wx:if="{{!orders.length && !loading}}" class="empty">
+      <image src="/assets/images/icons/empty-order.png" mode="widthFix"/>
+      <text class="tip">暂无订单哦</text>
+      <button class="go-shop" bindtap="goShop">去逛逛</button>
+    </view>
+  </scroll-view>
+</view>

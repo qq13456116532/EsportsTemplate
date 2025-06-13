@@ -8,7 +8,8 @@
       wx:key="id"
       class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
       bindtap="onCategoryTap"
-      data-id="{{item.id}}">
+      data-id="{{item.id}}"
+      data-name="{{item.name}}">
       <view class="indicator" wx:if="{{activeCategoryId === item.id}}"></view>
       {{item.name}}
     </view>

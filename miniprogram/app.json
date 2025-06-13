@@ -7,7 +7,9 @@
     "pages/mine/mine",
     "pages/product-detail/product-detail",
     "pages/about/about",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/order-confirm/order-confirm",
+    "pages/order/order"
   ],
   "entryPagePath": "pages/shop/shop",
   "tabBar": {

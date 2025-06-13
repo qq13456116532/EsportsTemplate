@@ -1,7 +1,24 @@
 <navigation-bar title="店铺" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 <view class="shop-container">
   <view class="search-bar">
-    <input class="search-input" placeholder="搜索大神或服务" />
+    <input
+      class="search-input"
+      placeholder="搜索大神或服务"
+      value="{{searchQuery}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearchConfirm"   
+      confirm-type="search"
+    />
+    <image
+      class="search-icon"
+      src="/assets/images/icons/search.svg"
+      bindtap="onSearchConfirm"
+    />
+    <text
+      wx:if="{{searchQuery}}"
+      class="cancel-text"
+      bindtap="onCancelSearch"
+    >取消</text>
   </view>
 
   <swiper class="promo-swiper" indicator-dots autoplay circular>
@@ -18,7 +35,7 @@
   </view>
 
   <view class="recommend-section">
-    <view class="section-title">精选推荐</view>
+    <view class="title-div"><text class="section-title">{{listTitle}}</text></view>
     <view class="product-list">
       <navigator url="/pages/product-detail/product-detail?id={{item.id}}" class="product-card" wx:for="{{products}}" wx:key="id">
         <image class="product-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
