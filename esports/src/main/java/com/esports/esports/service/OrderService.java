@@ -31,6 +31,8 @@ public class OrderService {
         po.setUser(userRepository.findById(uid).orElseThrow());
         po.setProduct(productRepository.findById(pid).orElseThrow());
         po.setStatus(OrderStatus.PENDING_PAYMENT);
+        po.setQuantity(qty);
+        
         // 如需数量、备注可在实体上加字段
         return orderRepository.save(po);
     }

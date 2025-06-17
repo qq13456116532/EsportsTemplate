@@ -18,6 +18,11 @@ public class Comment {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+     /** 关联的订单 */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private PlayerOrder order;
+    
     /** 发表用户 */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

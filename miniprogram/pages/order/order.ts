@@ -2,6 +2,8 @@
 import { request } from '../../utils/request';
 import { ensureLogin } from '../../utils/util';
 import { formatDate } from '../../utils/util';
+import { payOrder, refundOrder } from '../../utils/payment';
+
 
 Page({
   data: {
@@ -13,7 +15,13 @@ Page({
     ],
     activeTab: '',       // '' = 全部
     orders: [] as PlayerOrder[],
-    loading: false
+    loading: false,
+    commentModalVisible: false,
+    commentContent: '',
+    commentRating: 5,
+    commentOrderId: null,
+    commentProductId: null,
+    ratingOptions: [1,2,3,4,5]
   },
 
   /** 接收 mine 页带过来的 ?status=... */
@@ -49,6 +57,38 @@ Page({
     this.fetchOrders().finally(() => wx.stopPullDownRefresh());
   },
 
+    /** 点击“去付款” */
+    onPay(e: WechatMiniprogram.BaseEvent) {
+      const id = e.currentTarget.dataset.id;
+      wx.showLoading({ title: '支付中...' });
+      payOrder(id)
+        .then(() => {
+          wx.showToast({ title: '支付成功' });
+          this.fetchOrders();       // 刷新列表
+        })
+        .catch(() => wx.showToast({ title: '支付失败', icon: 'none' }))
+        .finally(() => wx.hideLoading());
+    },
+
+    /** 点击“申请退款” */
+    onRefund(e: WechatMiniprogram.BaseEvent) {
+      const id = e.currentTarget.dataset.id;
+      wx.showModal({
+        title: '确认退款？',
+        success: (res) => {
+          if (!res.confirm) return;
+          wx.showLoading({ title: '退款中...' });
+          refundOrder(id)
+            .then(() => {
+              wx.showToast({ title: '已退款' });
+              this.fetchOrders();
+            })
+            .catch(() => wx.showToast({ title: '退款失败', icon: 'none' }))
+            .finally(() => wx.hideLoading());
+        }
+      });
+    },
+
   /** 请求订单列表 */
   async fetchOrders() {
     if (!ensureLogin()) return;
@@ -77,9 +117,57 @@ Page({
       PENDING_PAYMENT: '待付款',
       ONGOING:         '进行中',
       PENDING_COMMENT: '待评价',
-      REFUNDED:        '已退款'
+      REFUNDED:        '已退款',
+      COMPLETED:       '已完成'
     };
     return map[status] || status;
+  },
+  onComment(e: WechatMiniprogram.BaseEvent) {
+    this.setData({
+      commentModalVisible: true,
+      commentOrderId: e.currentTarget.dataset.id,
+      commentProductId: e.currentTarget.dataset.productId,
+      commentContent: '',
+      commentRating: 5,
+    });
+  },
+  onCommentInput(e: WechatMiniprogram.Input) {
+    this.setData({ commentContent: e.detail.value });
+  },
+  onRatingChange(e: WechatMiniprogram.PickerChange) {
+    const idx = Number(e.detail.value);
+    this.setData({ commentRating: this.data.ratingOptions[idx] });
+  },
+  onCancelComment() {
+    this.setData({ commentModalVisible: false });
+  },
+  onSelectStar(e: WechatMiniprogram.TouchEvent) {
+    const index = Number(e.currentTarget.dataset.index);
+    this.setData({ commentRating: index + 1 });
+  },
+  stopPropagation() {
+    // 阻止事件冒泡的空函数
+  },
+  submitComment() {
+    const { commentOrderId, commentProductId, commentContent, commentRating } = this.data;
+    if (!commentContent.trim()) {
+      wx.showToast({ title: '请输入评价内容', icon: 'none' });
+      return;
+    }
+    request({
+      url: '/comments',
+      method: 'POST',
+      data: {
+        orderId: commentOrderId,
+        productId: commentProductId,
+        content: commentContent,
+        rating: commentRating,
+      }
+    }).then(() => {
+      wx.showToast({ title: '评价成功' });
+      this.setData({ commentModalVisible: false });
+      this.fetchOrders(); //刷新订单
+    });
   }
 });
 

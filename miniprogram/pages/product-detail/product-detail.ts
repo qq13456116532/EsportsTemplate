@@ -1,5 +1,5 @@
 import { request } from '../../utils/request';
-import { ensureLogin } from '../../utils/util';
+import { ensureLogin,formatDate } from '../../utils/util';
 
 Page({
   data: {
@@ -39,7 +39,7 @@ Page({
           avatar: c.avatar,
           content: c.content,
           rating: c.rating ?? 5,
-          timestamp: c.timestamp,
+          timestamp: formatDate(c.timestamp),
         }));
         this.setData({ comments: formatted });
       })

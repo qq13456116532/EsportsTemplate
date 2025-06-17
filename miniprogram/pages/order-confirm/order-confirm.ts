@@ -1,5 +1,7 @@
 import { request } from '../../utils/request';
 import { ensureLogin } from '../../utils/util';
+import { payOrder } from '../../utils/payment';
+
 
 Page({
   data: {
@@ -57,7 +59,8 @@ Page({
           quantity: this.data.qty,
           remark: this.data.remark
         }
-      });
+      }).then((order) => payOrder(order.id))
+      .then(() => { /* 跳转或提示 */ });
 
       wx.showToast({ title: '下单成功', icon: 'success' });
       // 简易跳转：支付流程接入前先回到订单列表/个人中心

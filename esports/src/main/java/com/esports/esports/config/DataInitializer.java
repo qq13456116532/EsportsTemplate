@@ -108,6 +108,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Comment c1 = new Comment();
         c1.setProduct(p1);
+        c1.setOrder(order1);
         c1.setUser(mockUser);
         c1.setContent("老板技术好、服务也好，五星好评！");
         c1.setRating(5);
