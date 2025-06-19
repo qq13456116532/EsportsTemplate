@@ -87,20 +87,20 @@ public class DataInitializer implements CommandLineRunner {
         b3.setImageUrl("/assets/images/mock/banner3.png");
         bannerRepository.saveAll(List.of(b1, b2, b3));
         
-        // Create a Mock User and Orders
-        User mockUser = new User();
-        mockUser.setNickName("电竞大神");
-        mockUser.setAvatarUrl("/assets/images/icons/defaultUser.svg");
-        mockUser.setOpenId("mock_openid_12345"); // Example openid
-        userRepository.save(mockUser);
+        // Create a default User and Orders
+        User defaultUser = new User();
+        defaultUser.setNickName("电竞大神");
+        defaultUser.setAvatarUrl("/assets/images/icons/defaultUser.svg");
+        defaultUser.setOpenId("mock_openid_12345"); // Example openid
+        userRepository.save(defaultUser);
         
         PlayerOrder order1 = new PlayerOrder();
-        order1.setUser(mockUser);
+        order1.setUser(defaultUser);
         order1.setProduct(p1);
         order1.setStatus(OrderStatus.ONGOING);
 
         PlayerOrder order2 = new PlayerOrder();
-        order2.setUser(mockUser);
+        order2.setUser(defaultUser);
         order2.setProduct(p3);
         order2.setStatus(OrderStatus.PENDING_PAYMENT);
 
@@ -109,7 +109,7 @@ public class DataInitializer implements CommandLineRunner {
         Comment c1 = new Comment();
         c1.setProduct(p1);
         c1.setOrder(order1);
-        c1.setUser(mockUser);
+        c1.setUser(defaultUser);
         c1.setContent("老板技术好、服务也好，五星好评！");
         c1.setRating(5);
 

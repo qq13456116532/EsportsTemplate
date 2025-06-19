@@ -20,4 +20,5 @@ public class User {
 
     private String nickName;
     private String avatarUrl;
+    private String phone;
 }

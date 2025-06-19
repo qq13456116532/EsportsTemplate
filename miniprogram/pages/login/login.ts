@@ -29,14 +29,25 @@ Page({
       wx.showToast({ title: '请输入正确的手机号', icon: 'none' });
       return;
     }
-
-    // TODO: 请求后端发送验证码
     wx.showLoading({ title: '发送中...' });
-    setTimeout(() => {
-      wx.hideLoading();
+
+    request({
+      url: '/send-code',     // 你的后端发送验证码的接口
+      method: 'POST',
+      data: { phone: this.data.phone }
+    })
+    .then(() => {
       wx.showToast({ title: '已发送', icon: 'success' });
-      this.startCountdown(60);   // 60 秒倒计时
-    }, 500);
+      this.startCountdown(60);
+    })
+    .catch(() => wx.showToast({ title: '发送失败', icon: 'none' }))
+    
+    
+    // setTimeout(() => {
+    //   wx.hideLoading();
+    //   wx.showToast({ title: '已发送', icon: 'success' });
+    //   this.startCountdown(60);   // 60 秒倒计时
+    // }, 500);
   },
 
   startCountdown(sec: number) {
@@ -58,13 +69,24 @@ Page({
   /* ========= 表单提交 ========= */
   login() {
     if (!this.data.canSubmit) return;
+    if (!/^1\d{10}$/.test(this.data.phone) || this.data.code.length < 4) {
+      wx.showToast({ title: '请填写完整信息', icon: 'none' });
+      return;
+    }
     wx.showLoading({ title: '登录中...' });
-    // TODO: 调用后端登录接口
-    setTimeout(() => {
-      wx.hideLoading();
+    request({
+      url: '/login',         // 你后端手机号验证码登录接口
+      method: 'POST',
+      data: { phone: this.data.phone, code: this.data.code }
+    })
+    .then(({ token, user }) => {
+      wx.setStorageSync('token', token);
+      wx.setStorageSync('userInfo', user);
       wx.showToast({ title: '登录成功', icon: 'success' });
-      wx.switchTab({ url: '/pages/index/index' });
-    }, 800);
+      this.leaveAfterLogin();
+    })
+    .catch(() => wx.showToast({ title: '登录失败', icon: 'none' }))
+    .finally(() => wx.hideLoading());
   },
 
   /* ========= 微信登录方式 ========= */
